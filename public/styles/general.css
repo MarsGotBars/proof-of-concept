@@ -1,0 +1,89 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  background: unset;
+  color: unset;
+  font-size: 1rem;
+  font-weight: unset;
+  font-family: sans-serif;
+  /* list-style: none; */
+}
+
+body {
+  --primary: #0a263e;
+  --black: #4a4a4a;
+  --white: #ffffff;
+  --gray: #ededed;
+  --highlight: #f7f7f7;
+  --gold: #c4a155;
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 2.5rem;
+  --space-xxl: 3rem;
+
+  --space-circle-sm: 2.25rem;
+  --space-circle-lg: 5rem;
+
+  --letter-spacing: -0.02em;
+}
+
+.xxl,
+.xl,
+.lg,
+.sub {
+  letter-spacing: var(--letter-spacing);
+}
+
+.xxl {
+  font-size: clamp(3.125rem, calc(8vw - 1em), 4rem);
+  line-height: 1em;
+}
+
+.xl {
+  font-size: clamp(2.625rem, calc(7vw - 1em), 3.25rem);
+  line-height: 1em;
+}
+
+.lg {
+  font-size: clamp(2.125rem, calc(6vw - .9em), 3rem);
+  line-height: 1em;
+}
+
+.md {
+  font-size: clamp(1.625rem, calc(5vw - 1em), 2rem);
+  line-height: calc(1em + .5rem);
+}
+
+.sm {
+  font-size: clamp(1.5rem);
+  line-height: 2.5rem;
+}
+
+.xs {
+  font-size: clamp(1.5rem);
+  line-height: 2.5rem;
+}
+
+.default {
+  font-size: clamp(1.125rem);
+  line-height: 2rem;
+}
+
+.sub {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+/* Undo the resets! */
+span {
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+}
