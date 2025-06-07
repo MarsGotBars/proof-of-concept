@@ -21,7 +21,7 @@
         {% assign metadata = item.metadata %}
         {% assign auteurs = metadata.auteur | split: '; ' %}
         <li>
-          <h2 class="md">{{ metadata.titel }}</h2>
+          <a href="/catalogus/{{ item.id }}"><h2 class="md">{{ metadata.titel }}</h2></a>
           <h3 class="sm">{{ metadata.auteur_label }}</h3>
           {% for auteur in auteurs %}
             <p>{{ auteur }}</p>
