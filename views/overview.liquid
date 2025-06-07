@@ -1,0 +1,37 @@
+{% layout 'layouts/default.liquid' %}
+{% block head %}
+
+{% endblock %}
+{% block content %}
+  <header>
+    <nav></nav>
+    <h1 class="xxl">
+      <span>O</span>nline catalogus</h1>
+
+    <p class="xxl">test</p>
+    <p class="xl">test</p>
+    <p class="lg">test</p>
+    <p class="md">test</p>
+    <p class="sm">test</p>
+    <nav></nav>
+  </header>
+  <main>
+    <ul>
+      {% for item in items %}
+        {% assign metadata = item.metadata %}
+        {% assign auteurs = metadata.auteur | split: '; ' %}
+        <li>
+          <h2 class="md">{{ metadata.titel }}</h2>
+          <h3 class="sm">{{ metadata.auteur_label }}</h3>
+          {% for auteur in auteurs %}
+            <p>{{ auteur }}</p>
+          {% endfor %}
+          <h3 class="sm">{{ metadata.jaar_label }}</h3>
+          <p>{{ metadata.jaar }}</p>
+          <h3 class="sm">{{ metadata.plaats_van_uitgave_label }}</h3>
+          <p>{{ metadata.plaats_van_uitgave }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  </main>
+{% endblock %}
