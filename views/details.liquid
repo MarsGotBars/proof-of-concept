@@ -1,4 +1,4 @@
-{% layout 'layouts/default.liquid' %}
+{% layout 'layouts/default.liquid', titel: item.title | default: "Online catalogus" %}
 {% block head %}
 
 {% endblock %}
@@ -15,6 +15,7 @@
     <p class="md">test</p>
     <p class="sm">test</p>
     <nav></nav>
-    {{ id | default: "none" }}
+    {{ item.title | default: "none" }}
+    {{ item.id | default: "none" }}
   </header>
 {% endblock %}

@@ -62,8 +62,8 @@ body {
 }
 
 .sm {
-  font-size: clamp(1.5rem);
-  line-height: 2.5rem;
+  font-size: clamp(1.25rem, calc(4vw - 1em), 1.5rem);
+  line-height: calc(1em + .75rem);
 }
 
 .xs {
