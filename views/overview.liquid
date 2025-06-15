@@ -1,14 +1,16 @@
-{% layout 'layouts/default.liquid'
-  , title: "Online catalogus" %}
+{%
+  layout 'layouts/default.liquid'
+  , title: "Online catalogus"
+%}
 {% block head %}
-  <link rel="stylesheet" href="./styles/general.css">
-  <link rel="stylesheet" href="./styles/components/pagination.css">
-  <link rel="stylesheet" href="./styles/pages/overview.css">
+<link rel="stylesheet" href="./styles/general.css">
+<link rel="stylesheet" href="./styles/components/pagination.css">
+<link rel="stylesheet" href="./styles/pages/overview.css">
 {% endblock %}
 {% block content %}
-  <header>
-    <img src="/assets/images/overview.jpg" alt="" height="352" width="1400">
-    <div class="wrapper">
+<header>
+  <img src="/assets/images/overview.jpg" alt="" height="352" width="1400">
+  <div class="wrapper">
     <nav>
       <ul>
         <li>
@@ -33,7 +35,8 @@
     </nav>
     <div class="circle">
       <h1 class="xxl">
-        <span>O</span>nline <br/> catal<span>o</span>gus
+        <span>O</span>nline <br>
+        catal<span>o</span>gus
       </h1>
     </div>
     <nav>
@@ -58,36 +61,110 @@
         </li>
       </ul>
     </nav>
-    </div>
-  </header>
-  <main>
-    {% comment %} {% if items %} {% endcomment %}
-    <ul>
-      {% for item in items %}
-        {% assign metadata = item.metadata %}
-        {% assign auteurs = metadata.auteur | split: '; ' %}
-        <li>
-          <a href="/catalogus/{{ item.id }}">
-            <h2 class="md">{{ metadata.titel }}</h2>
-          </a>
-          <h3 class="sm">{{ metadata.auteur_label }}</h3>
-          {% for auteur in auteurs %}
-            <p>{{ auteur }}</p>
+  </div>
+</header>
+<main>
+  <form action="/catalogus" method="get">
+    <div class="filters">
+      <details name="filters">
+        <summary>Auteur {% render 'partials/icons/triangle' %}</summary>
+        <ul>
+          {% assign auteur_array = aggregations.auteur | entries %}
+          {% for entry in auteur_array %}
+            <li>
+              <label for="auteur-{{ entry[0] }}">
+                <input
+                  type="checkbox"
+                  name="auteur"
+                  value="{{ entry[0] }}"
+                  id="auteur-{{ entry[0] }}"
+                  {% if filters.auteur contains entry[0] %}
+                    checked
+                  {% endif %}
+                >
+                {{ entry[0] }} ({{ entry[1] }})
+              </label>
+            </li>
           {% endfor %}
-          <h3 class="sm">{{ metadata.jaar_label }}</h3>
-          <p>{{ metadata.jaar }}</p>
-          <h3 class="sm">{{ metadata.plaats_van_uitgave_label }}</h3>
-          <p>{{ metadata.plaats_van_uitgave }}</p>
-        </li>
-      {% endfor %}
-    </ul>
+        </ul>
+      </details>
+      <details name="filters">
+        <summary>Jaar {% render 'partials/icons/triangle' %}</summary>
+        <ul>
+          {% for entry in aggregations.jaar %}
+            {% assign year_value = entry[0] %}
+            <li>
+              <label for="jaar-{{ year_value | escape }}">
+                <input
+                  type="checkbox"
+                  name="jaar"
+                  value="{{ year_value | escape }}"
+                  id="jaar-{{ year_value | escape }}"
+                  {% if filters.jaar contains year_value %}
+                    checked
+                  {% endif %}
+                >
+                {{ year_value }} ({{ entry[1] }})
+              </label>
+            </li>
+          {% endfor %}
+        </ul>
+      </details>
+      <details name="filters">
+        <summary>Plaats van publicatie {% render 'partials/icons/triangle' %}</summary>
+        <ul>
+          {% assign plaats_array = aggregations.plaats_van_uitgave | entries %}
+          {% for entry in plaats_array %}
+            <li>
+              <label for="plaats-{{ entry[0] }}">
+                <input
+                  type="checkbox"
+                  name="plaats_van_uitgave"
+                  value="{{ entry[0] }}"
+                  id="plaats-{{ entry[0] }}"
+                  {% if filters.plaats_van_uitgave contains entry[0] %}
+                    checked
+                  {% endif %}
+                >
+                {{ entry[0] }} ({{ entry[1] }})
+              </label>
+            </li>
+          {% endfor %}
+        </ul>
+      </details>
+    </div>
+    <div class="search">
+      <input type="text" name="search" placeholder="Zoekopdracht..." value="{{ filters.search }}">
+      <button type="submit">Zoeken</button>
+    </div>
+    
+  </form>
+  {% comment %} {% if items %} {% endcomment %}
+  <ul>
+    {% for item in items %}
+      {% assign metadata = item.metadata %}
+      {% assign auteurs = metadata.auteur | split: '; ' %}
+      <li>
+        <a href="/catalogus/{{ item.id }}">
+          <h2 class="md">{{ metadata.titel }}</h2>
+        </a>
+        <h3 class="sm">{{ metadata.auteur_label }}</h3>
+        {% for auteur in auteurs %}
+          <p>{{ auteur }}</p>
+        {% endfor %}
+        <h3 class="sm">{{ metadata.jaar_label }}</h3>
+        <p>{{ metadata.jaar }}</p>
+        <h3 class="sm">{{ metadata.plaats_van_uitgave_label }}</h3>
+        <p>{{ metadata.plaats_van_uitgave }}</p>
+      </li>
+    {% endfor %}
+  </ul>
 
-    {% render 'partials/pagination/pagination'
-      , current_page: pagination.currentPage
-      , total_pages: pagination.totalPages
-      , base_url: base_url %}
+  {% if pagination.total > pagination.limit %}
+    {% render 'partials/pagination/pagination', pagination: pagination %}
+  {% endif %}
   {% comment %} {% else %} {% endcomment %}
   {% comment %} Geen resultaten {% endcomment %}
   {% comment %} {% endif %} {% endcomment %}
-  </main>
+</main>
 {% endblock %}
