@@ -6,14 +6,14 @@ function addLabelFields(obj, targetObject = 'metadata') {
   if (!obj || typeof obj !== 'object') return obj;
   
   const result = { ...obj };
-  
-  // Add labels for the specified object (default: metadata)
+
+  // Check of het item een metadata obj bevat en of dit daadwerkelijk een type Object is
   if (result[targetObject] && typeof result[targetObject] === 'object') {
     const originalFields = result[targetObject];
     const labelsToAdd = {};
     
     Object.keys(originalFields).forEach(key => {
-      // Create label for ALL keys, not just those with underscores
+      // Label benamingen gebaseerd op originele field naam
       labelsToAdd[`${key}_label`] = keyToLabel(key);
     });
     
