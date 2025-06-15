@@ -20,16 +20,16 @@
   font-size: 1rem;
   font-weight: unset;
   font-family: sans-serif;
-  /* list-style: none; */
+  list-style: none;
 }
 
 body {
-  --blue: #0A263E;
-  --black: #070D13;
-  --white: #EDF0F4;
-  --gray: #EDEDED;
-  --highlight: #F7F7F7;
-  --gold: #C4A155;
+  --blue: #0a263e;
+  --black: #070d13;
+  --white: #edf0f4;
+  --gray: #ededed;
+  --highlight: #f7f7f7;
+  --gold: #c4a155;
 
   --space-xs: 0.5rem;
   --space-sm: 1rem;
@@ -39,15 +39,26 @@ body {
   --space-xxl: 3rem;
 
   --space-circle-sm: 2.25rem;
-  --space-circle-lg: 5rem;
+  --space-circle-lg: 8rem;
+
+  --border-lg: .3125rem solid var(--gold);
+  --border-sm: .1875rem solid var(--gold);
 
   --letter-spacing: -0.02em;
 
-  --primary-font: Crimson, 'Times New Roman', Times;
+  --primary-font: Crimson, "Times New Roman", Times;
   --secondary-font: Roboto, sans-serif, serif;
 
   background-color: var(--blue);
   color: var(--white);
+  max-width: 1400px;
+  margin: 0 auto;
+  border-left: var(--border-lg);
+  border-right: var(--border-lg);
+}
+
+body * {
+  font-family: var(--secondary-font);
 }
 
 .xxl,
@@ -57,39 +68,53 @@ body {
   letter-spacing: var(--letter-spacing);
 }
 
+.xxl,
+.xl,
+.lg,
+.md,
+.sm,
+.sub{
+  font-family: var(--primary-font);
+}
+
 .xxl {
   font-size: clamp(3.125rem, calc(8vw - 1em), 4rem);
   line-height: 1em;
+  font-weight: 500;
 }
 
 .xl {
   font-size: clamp(2.625rem, calc(7vw - 1em), 3.25rem);
   line-height: 1em;
+  font-weight: 500;
 }
 
 .lg {
-  font-size: clamp(2.125rem, calc(6vw - .9em), 3rem);
+  font-size: clamp(2.125rem, calc(6vw - 0.9em), 3rem);
   line-height: 1em;
+  font-weight: 500;
 }
 
 .md {
   font-size: clamp(1.625rem, calc(5vw - 1em), 2rem);
-  line-height: calc(1em + .5rem);
+  line-height: calc(1em + 0.5rem);
 }
 
 .sm {
   font-size: clamp(1.25rem, calc(4vw - 1em), 1.5rem);
-  line-height: calc(1em + .75rem);
+  line-height: calc(1em + 0.75rem);
+  font-weight: 500;
 }
-/* TODO configure rest of the typography */
+
 .xs {
   font-size: clamp(1.5rem);
   line-height: 2.5rem;
+  font-weight: 600;
 }
 
 .default {
-  font-size: clamp(1.125rem);
-  line-height: 2rem;
+  font-size: clamp(1rem, calc(3.5vw - 1em), 1.125rem);
+  line-height: clamp(1.5rem, calc(2.5vw + .25rem), 2rem);
 }
 
 .sub {
@@ -97,8 +122,12 @@ body {
   line-height: 1.5rem;
 }
 
-@media (max-width: 768px){
-  .sub{
+@media (max-width: 768px) {
+  body{
+    border-left: var(--border-sm);
+    border-right: var(--border-sm);
+  }
+  .sub {
     font-weight: 500;
   }
 }
@@ -110,7 +139,7 @@ span {
   font-family: inherit;
 }
 
-.circle{
+.circle {
   border-radius: 1e58rem;
   border: 5px solid var(--gold);
   width: fit-content;
@@ -119,6 +148,10 @@ span {
   aspect-ratio: 1;
 }
 
-h1 span{
+h1 span {
   color: var(--gold);
+}
+
+img{
+  width: 100%;
 }
