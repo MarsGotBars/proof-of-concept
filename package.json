@@ -31,6 +31,7 @@
     "liquidjs": "^10.21.0"
   },
   "devDependencies": {
+    "@shopify/prettier-plugin-liquid": "^1.9.3",
     "nodemon": "^3.1.10"
   }
 }
