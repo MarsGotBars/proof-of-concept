@@ -6,3 +6,8 @@ node_modules
 .npm
 .env
 /cache/
+
+# Prettier
+.prettierrc
+.prettierrc.css
+.prettierignore
