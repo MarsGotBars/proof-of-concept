@@ -3,3 +3,13 @@
   gap: 0.5rem;
   list-style: none;
 }
+
+.current-page {
+  color: var(--gold);
+}
+
+.pagination-prev:not(a),
+.pagination-next:not(a) {
+  opacity: .5;
+  cursor: not-allowed;
+}
