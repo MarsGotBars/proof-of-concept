@@ -11,12 +11,12 @@ header img {
   flex: 1;
 }
 
-.wrapper{
+.wrapper {
   display: flex;
   width: 100%;
 }
 
-nav{
+nav {
   flex: 1;
 }
 
@@ -46,4 +46,62 @@ h1 {
 
 h1 > span:nth-child(1) {
   font-size: clamp(4rem, calc(10vw - 0.5em), 8rem);
+}
+
+/* MARK: FORM & FILTERS
+ */
+form {
+  padding: 1.25rem 2rem;
+  justify-content: space-between;
+}
+
+form details[open] svg {
+  transform: rotate(180deg);
+}
+
+form,
+.filters {
+  display: flex;
+}
+
+.filters {
+  gap: 1.5rem;
+}
+
+.search button {
+  background: var(--white);
+  color: var(--blue);
+}
+
+.search {
+  display: flex;
+  gap: 0;
+}
+
+.filters summary,
+.search > * {
+  padding: 0.25rem 0.75rem;
+  border: 0.1875rem solid var(--white);
+}
+
+.search input {
+  border-right: 0;
+}
+
+form details {
+  position: relative;
+}
+
+form summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+details > *:nth-child(2) {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--blue);
+  border: var(--border-sm);
 }
