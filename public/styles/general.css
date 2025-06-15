@@ -23,6 +23,10 @@
   list-style: none;
 }
 
+html, body{
+  height: 100%;
+}
+
 body {
   --blue: #0a263e;
   --black: #070d13;
@@ -55,6 +59,12 @@ body {
   margin: 0 auto;
   border-left: var(--border-lg);
   border-right: var(--border-lg);
+}
+@media (max-width: 1410px) {
+  body{
+    border-left: none;
+    border-right: none;
+  }
 }
 
 body * {
@@ -122,16 +132,6 @@ body * {
   line-height: 1.5rem;
 }
 
-@media (max-width: 768px) {
-  body{
-    border-left: var(--border-sm);
-    border-right: var(--border-sm);
-  }
-  .sub {
-    font-weight: 500;
-  }
-}
-
 /* Undo the resets! */
 span {
   font-size: inherit;
@@ -154,4 +154,17 @@ h1 span {
 
 img{
   width: 100%;
+}
+
+/* Only show pointer cursor on links with href */
+a:not([href=""]), button, input[type="checkbox"], label:has(input[type="checkbox"]), label:has(input[type="radio"]), details {
+  cursor: pointer;
+}
+
+/* MARK: MEDIA QUERIES
+ */
+@media (max-width: 768px) {
+  .sub {
+    font-weight: 500;
+  }
 }
