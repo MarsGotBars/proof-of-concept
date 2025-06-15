@@ -1,33 +1,33 @@
 <nav class="pagination">
   <ul class="pagination-list">
-    {% if current_page > 1 %}
-      <li>
-        <a href="?page=1">
-          <span>«</span>
-          <span class="pagination-text">First</span>
+    <li>
+      {% if pagination.currentPage > 1 %}
+        <a href="?{{ pagination.currentQueryString }}{% if pagination.currentQueryString %}&{% endif %}page={{ pagination.currentPage | minus: 1 }}" class="pagination-prev">
+          <span>←</span>
+          <span class="pagination-text">Vorige pagina</span>
         </a>
-      </li>
-    {% endif %}
-    {% if current_page > 1 %}
-      <li>
-        <a href="?page={{ current_page | minus: 1 }}">{{ current_page | minus: 1 }}</a>
-      </li>
-    {% endif %}
-    <li aria-current="page">
-      <span>{{ current_page }}</span>
+      {% else %}
+        <span class="pagination-prev">
+          <span>←</span>
+          <span class="pagination-text">Vorige pagina</span>
+        </span>
+      {% endif %}
     </li>
-    {% if current_page < total_pages %}
-      <li>
-        <a href="?page={{ current_page | plus: 1 }}">{{ current_page | plus: 1 }}</a>
-      </li>
-    {% endif %}
-    {% if current_page < total_pages %}
-      <li>
-        <a href="?page={{ total_pages }}">
-          <span>»</span>
-          <span class="pagination-text">Last</span>
+    <li aria-current="page">
+      <span>Pagina {{ pagination.currentPage }} van {{ pagination.totalPages }}</span>
+    </li>
+    <li>
+      {% if pagination.currentPage < pagination.totalPages %}
+        <a href="?{{ pagination.currentQueryString }}{% if pagination.currentQueryString %}&{% endif %}page={{ pagination.currentPage | plus: 1 }}" class="pagination-next">
+          <span class="pagination-text">Volgende pagina</span>
+          <span>→</span>
         </a>
-      </li>
-    {% endif %}
+      {% else %}
+        <span class="pagination-next">
+          <span class="pagination-text">Volgende pagina</span>
+          <span>→</span>
+        </span>
+      {% endif %}
+    </li>
   </ul>
 </nav>
