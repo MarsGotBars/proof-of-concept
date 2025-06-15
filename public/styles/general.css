@@ -14,12 +14,12 @@
 }
 
 body {
-  --primary: #0a263e;
-  --black: #4a4a4a;
-  --white: #ffffff;
-  --gray: #ededed;
-  --highlight: #f7f7f7;
-  --gold: #c4a155;
+  --blue: #0A263E;
+  --black: #070D13;
+  --white: #EDF0F4;
+  --gray: #EDEDED;
+  --highlight: #F7F7F7;
+  --gold: #C4A155;
 
   --space-xs: 0.5rem;
   --space-sm: 1rem;
@@ -32,6 +32,9 @@ body {
   --space-circle-lg: 5rem;
 
   --letter-spacing: -0.02em;
+
+  background-color: var(--blue);
+  color: var(--white);
 }
 
 .xxl,
@@ -65,7 +68,7 @@ body {
   font-size: clamp(1.25rem, calc(4vw - 1em), 1.5rem);
   line-height: calc(1em + .75rem);
 }
-
+/* TODO configure rest of the typography */
 .xs {
   font-size: clamp(1.5rem);
   line-height: 2.5rem;
@@ -86,4 +89,17 @@ span {
   font-size: inherit;
   font-weight: inherit;
   font-family: inherit;
+}
+
+.circle{
+  border-radius: 1e58rem;
+  border: 5px solid var(--gold);
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  aspect-ratio: 1;
+}
+
+h1 span{
+  color: var(--gold);
 }

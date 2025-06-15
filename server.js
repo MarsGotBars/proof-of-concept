@@ -21,7 +21,7 @@ app.set("view engine", "liquid");
 // Single route setup
 routes(app);
 
-app.set("port", process.env.PORT || 1234);
+app.set("port", process.env.PORT || 2345);
 
 app.listen(app.get("port"), function () {
   console.log(`Project draait via http://localhost:${app.get("port")}/`);

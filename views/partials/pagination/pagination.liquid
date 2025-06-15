@@ -1,0 +1,33 @@
+<nav class="pagination">
+  <ul class="pagination-list">
+    {% if current_page > 1 %}
+      <li>
+        <a href="?page=1">
+          <span>«</span>
+          <span class="pagination-text">First</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if current_page > 1 %}
+      <li>
+        <a href="?page={{ current_page | minus: 1 }}">{{ current_page | minus: 1 }}</a>
+      </li>
+    {% endif %}
+    <li aria-current="page">
+      <span>{{ current_page }}</span>
+    </li>
+    {% if current_page < total_pages %}
+      <li>
+        <a href="?page={{ current_page | plus: 1 }}">{{ current_page | plus: 1 }}</a>
+      </li>
+    {% endif %}
+    {% if current_page < total_pages %}
+      <li>
+        <a href="?page={{ total_pages }}">
+          <span>»</span>
+          <span class="pagination-text">Last</span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>

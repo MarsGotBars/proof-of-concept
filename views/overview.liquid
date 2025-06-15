@@ -1,27 +1,36 @@
-{% layout 'layouts/default.liquid', titel: "Online catalogus" %}
+{% layout 'layouts/default.liquid'
+  , title: "Online catalogus" %}
 {% block head %}
-
+  <link rel="stylesheet" href="./styles/general.css">
+  <link rel="stylesheet" href="./styles/components/pagination.css">
+  <link rel="stylesheet" href="./styles/pages/overview.css">
 {% endblock %}
 {% block content %}
   <header>
     <nav></nav>
-    <h1 class="xxl">
-      <span>O</span>nline catalogus</h1>
-
+    <div class="circle">
+      <h1 class="xxl">
+        <span>O</span>nline <br/> catal<span>o</span>gus
+      </h1>
+    </div>
     <p class="xxl">test</p>
     <p class="xl">test</p>
     <p class="lg">test</p>
     <p class="md">test</p>
     <p class="sm">test</p>
+    <p class="sub">test</p>
     <nav></nav>
   </header>
   <main>
+    {% comment %} {% if items %} {% endcomment %}
     <ul>
       {% for item in items %}
         {% assign metadata = item.metadata %}
         {% assign auteurs = metadata.auteur | split: '; ' %}
         <li>
-          <a href="/catalogus/{{ item.id }}"><h2 class="md">{{ metadata.titel }}</h2></a>
+          <a href="/catalogus/{{ item.id }}">
+            <h2 class="md">{{ metadata.titel }}</h2>
+          </a>
           <h3 class="sm">{{ metadata.auteur_label }}</h3>
           {% for auteur in auteurs %}
             <p>{{ auteur }}</p>
@@ -33,5 +42,13 @@
         </li>
       {% endfor %}
     </ul>
+
+    {% render 'partials/pagination/pagination'
+      , current_page: pagination.currentPage
+      , total_pages: pagination.totalPages
+      , base_url: base_url %}
+  {% comment %} {% else %} {% endcomment %}
+  {% comment %} Geen resultaten {% endcomment %}
+  {% comment %} {% endif %} {% endcomment %}
   </main>
 {% endblock %}

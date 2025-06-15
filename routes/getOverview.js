@@ -23,7 +23,6 @@ router.get("/catalogus", async function (request, response) {
       limit: parseInt(limit),
       ...filters
     });
-    console.log(result.data[0].metadata.status);
     
     response.render("overview", {
       items: result.data,
@@ -33,7 +32,8 @@ router.get("/catalogus", async function (request, response) {
         total: result.total,
         limit: result.limit
       },
-      filters: request.query
+      filters: request.query,
+      base_url: '/catalogus'
     });
 
   } catch (error) {
