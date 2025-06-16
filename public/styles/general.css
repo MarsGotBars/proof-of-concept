@@ -58,6 +58,7 @@ body {
   margin: 0 auto;
   border-left: var(--border-lg);
   border-right: var(--border-lg);
+  min-height: 100vh;
 }
 @media (max-width: 1410px) {
   body{
