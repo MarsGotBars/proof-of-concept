@@ -51,6 +51,8 @@ h1 > span:nth-child(1) {
 /* MARK: FORM & FILTERS
  */
 form {
+  border-top: var(--border-sm);
+  border-bottom: var(--border-sm);
   padding: 1.25rem 2rem;
   justify-content: space-between;
 }
