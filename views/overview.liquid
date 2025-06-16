@@ -146,6 +146,12 @@
       {% assign metadata = item.metadata %}
       {% assign auteurs = metadata.auteur | split: '; ' %}
       <li>
+        <picture>
+          <source srcset="{{ item.asset.medium.url }}" type="image/jpg" media="(max-width: 880px)" width="{{ item.asset.medium.width }}" height="{{ item.asset.medium.height }}">
+          <source srcset="{{ item.asset.fluid.url }}" type="image/jpg" media="(max-width: 1140px)" width="{{ item.asset.fluid.width }}" height="{{ item.asset.fluid.height }}">
+          <source srcset="{{ item.asset.large.url }}" type="image/jpg" width="{{ item.asset.large.width }}" height="{{ item.asset.large.height }}">
+          <img src="{{ item.asset.medium.url }}" alt="" {% if forloop.index > 6 %}loading="lazy"{% endif %} width="{{ item.asset.medium.width }}" height="{{ item.asset.medium.height }}">
+        </picture>
         <a href="/catalogus/{{ item.id }}">
           <h2 class="md">{{ metadata.titel }}</h2>
         </a>
