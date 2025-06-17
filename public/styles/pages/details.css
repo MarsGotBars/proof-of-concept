@@ -1,1 +1,138 @@
+body {
+  display: flex;
+  flex-direction: column;
+  max-width: unset;
+  border: unset;
+  margin: unset;
+  height: 100vh;
+  max-height: 100vh;
+}
 
+/* MARK: NAVIGATION 
+*/
+header nav {
+  width: 100%;
+  display: flex;
+}
+
+header nav > * {
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+  color: inherit;
+  border-bottom: var(--border-lg);
+  text-align: center;
+  text-decoration: none;
+}
+
+header nav > a svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+header nav > *:nth-child(1) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 20%;
+}
+
+header nav > .back svg {
+  transform: rotate(180deg);
+}
+
+header nav > *:nth-child(3) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 20%;
+}
+
+header nav > *:nth-child(1) svg {
+  transform: rotate(90deg);
+}
+
+header nav > *:nth-child(3) svg {
+  transform: rotate(-90deg);
+}
+
+header nav > .back {
+  flex: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 0;
+}
+
+header nav > a.back {
+  border-left: var(--border-lg);
+  border-right: var(--border-lg);
+}
+
+header nav > *:nth-child(3) {
+  flex: 20%;
+}
+
+header nav a {
+  display: grid;
+  place-content: center;
+}
+
+header nav > *:only-child {
+  border-left: unset;
+  border-right: unset;
+}
+
+/* MARK: MAIN 
+*/
+.container {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+main {
+    width: 40%;
+}
+aside {
+  width: 60%;
+  height: 100%;
+}
+
+aside picture {
+  /* width: 100%; */
+  height: 80%;
+  object-fit: contain;
+  background-color: var(--black);
+}
+aside img{
+    object-fit: contain;
+}
+
+#info {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 32px 16px;
+}
+
+#comment,
+#media {
+  display: none;
+}
+
+@media (max-width: 61.25rem) {
+  header nav > *:not(.back) {
+    display: none;
+    border: unset;
+  }
+
+  body header nav > a.back {
+    flex: 100%;
+    border-left: unset;
+    border-right: unset;
+  }
+}
