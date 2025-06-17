@@ -66,7 +66,7 @@ form {
   box-shadow: 0 -1rem 0 0 var(--blue);
 }
 
-.filters {
+.filters-desktop {
   display: flex;
   gap: 1.5rem;
   z-index: 2;
@@ -78,7 +78,7 @@ form {
 }
 
 /* Form Elements */
-.filters summary,
+.filters-desktop summary,
 .search > * {
   padding: 0.25rem 0.75rem;
   border: 0.1875rem solid var(--white);
@@ -118,7 +118,7 @@ form details > *:nth-child(2) {
   border-color: var(--white);
   min-width: 100%;
   width: max-content;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 input:checked + span {
@@ -183,7 +183,6 @@ input:checked + span {
   line-height: inherit;
 }
 
-/* Details Dropdown Content */
 .items-list > li details div {
   position: absolute;
   top: calc(100% - 0.25rem);
@@ -197,13 +196,16 @@ input:checked + span {
   padding: 0.5rem;
 }
 
-/* Details Content Spacing */
 .items-list details div h3 + p {
   margin-top: 0.5rem;
 }
 
 .items-list details div p + h3 {
   margin-top: 1rem;
+}
+
+.filters-mobile {
+  display: none;
 }
 
 /* MARK: FOOTER
@@ -214,4 +216,77 @@ footer {
   height: 18rem;
   display: grid;
   place-items: center;
+}
+
+@media (max-width: 61.25rem) {
+  .circle h1{
+    padding: var(--space-circle-sm);
+  }
+
+  header nav{
+    display: none;
+  }
+
+  .wrapper{
+    justify-content: center;
+  }
+
+  form{
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  form .search{
+    width: 100%;
+    order: 1;
+  }
+
+  .search input{
+    width: 100%;
+  }
+  form .filters-desktop{
+    order: 2;
+  }
+
+  form .filters-mobile{
+    order: 3;
+    width: 100%;
+    border: var(--border-sm);
+    border-color: var(--white);
+    position: static;
+  }
+
+  .filters-mobile summary{
+    padding: 0.25rem 0.75rem;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+  }
+
+  form details > *:nth-child(2){
+    border: unset;
+    border-bottom: var(--border-sm);
+    top: calc(100% + .1875rem);
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .filters-mobile .filters-mobile-content ul {
+    z-index: 5;
+    max-height: 30vh;
+    overflow-y: auto;
+  }
+
+  .filters-mobile .filters-mobile-content details{
+    position: static;
+    
+  }
+}
+
+@media (max-width: 31.25rem) {
+  .filters-desktop{
+    display: none;
+  }
+  .filters-mobile{
+    display: flex;
+  }
 }
