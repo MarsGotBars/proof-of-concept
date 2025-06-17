@@ -170,7 +170,7 @@
             <img
               src="{{ item.asset.medium.url }}"
               alt=""
-              {% if forloop.index > 6 %}
+              {% if forloop.index > 4 %}
                 loading="lazy"
               {% endif %}
               width="{{ item.asset.medium.width }}"
@@ -183,14 +183,13 @@
           <details class="default">
             <summary>Info {% render 'partials/icons/triangle' %}</summary>
             <div>
-              <h3 class="default">{{ metadata.auteur_label | capitalize }}</h3>
-              {% for auteur in auteurs %}
-                <p class="sub">{{ auteur }}</p>
-              {% endfor %}
-              <h3 class="default">{{ metadata.jaar_label | capitalize }}</h3>
-              <p class="sub">{{ metadata.jaar }}</p>
-              <h3 class="default">{{ metadata.plaats_van_uitgave_label | capitalize }}</h3>
-              <p class="sub">{{ metadata.plaats_van_uitgave }}</p>
+              <h3 class="default">Auteur</h3>
+              {% assign author_value = item.metadata.auteur | strip %}
+              <p class="sub">{% unless author_value == blank %}{{ author_value }}{% else %}n.p.{% endunless %}</p>
+              <h3 class="default">Jaar</h3>
+              <p class="sub">{{ metadata.jaar | default: "n.p." }}</p>
+              <h3 class="default">Plaats van publicatie</h3>
+              <p class="sub">{{ metadata.plaats_van_uitgave | default: "n.p." }}</p>
             </div>
           </details>
         </a>
@@ -208,4 +207,7 @@
   {% comment %} Geen resultaten {% endcomment %}
   {% comment %} {% endif %} {% endcomment %}
 </main>
+<footer>
+  <p class="xl">The Embassy of the Free Mind</p>
+</footer>
 {% endblock %}
