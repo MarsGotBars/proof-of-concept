@@ -1,4 +1,4 @@
-{% layout 'layouts/default.liquid', titel: item.title | default: "Online catalogus" %}
+{% layout 'layouts/default.liquid', title: item.metadata.titel | default: "Online catalogus" %}
 {% block head %}
 <link rel="stylesheet" href="/styles/pages/details.css">
 {% endblock %}
@@ -20,45 +20,61 @@
   </nav>
 </header>
 <div class="container">
-<main>
-  <div id="info">
-    <h1 class="md">{{ item.metadata.titel | default: 'n.v.t.' }}</h1>
-    <div class="wrapper">
-      <h2 class="xs">{{ item.metadata.auteur_label | capitalize }}</h2>
-      <p class="sub">{{ item.metadata.auteur | default: 'n.p.' }}</p>
-      <h2 class="xs">{{ item.metadata.jaar_label | capitalize }}</h2>
-      <p class="sub">{{ item.metadata.jaar | default: 'n.p.' }}</p>
-      <h2 class="xs">{{ item.metadata.plaats_van_uitgave_label | capitalize }}</h2>
-      <p class="sub">{{ item.metadata.plaats_van_uitgave | default: 'n.p.' }}</p>
-      <h2 class="xs">Trefwoorden</h2>
-      <p class="sub">{{ item.metadata.keywords | default: 'n.p.' }}</p>
-      <h2 class="xs">{{ item.metadata.signatuur_label | capitalize }}</h2>
-      <p class="sub">{{ item.metadata.signatuur | default: 'n.p.' }}</p>
-      <h2 class="xs">Status</h2>
-      <p class="sub">{{ item.metadata.status | default: 'n.p.' }}</p>
-      <h2 class="xs">Aantal exemplaren</h2>
-      <p class="sub">{{ item.metadata.aantal_exemplaren | default: 'n.p.' }}</p>
+  <main>
+    <div id="info">
+      <h1 class="md">{{ item.metadata.titel | default: 'n.v.t.' }}</h1>
+      <ul class="wrapper">
+        <li>
+          <h2 class="xs">{{ item.metadata.auteur_label | capitalize }}</h2>
+          <p class="sub">{{ item.metadata.auteur | default: 'n.p.' }}</p>
+        </li>
+        <li>
+          <h2 class="xs">{{ item.metadata.jaar_label | capitalize }}</h2>
+          <p class="sub">{{ item.metadata.jaar | default: 'n.p.' }}</p>
+        </li>
+        <li>
+          <h2 class="xs">{{ item.metadata.plaats_van_uitgave_label | capitalize }}</h2>
+          <p class="sub">{{ item.metadata.plaats_van_uitgave | default: 'n.p.' }}</p>
+        </li>
+        <li>
+          <h2 class="xs">Trefwoorden</h2>
+          <p class="sub">{{ item.metadata.keywords | default: 'n.p.' }}</p>
+        </li>
+        <li>
+          <h2 class="xs">{{ item.metadata.signatuur_label | capitalize }}</h2>
+          <p class="sub">{{ item.metadata.signatuur | default: 'n.p.' }}</p>
+        </li>
+        <li>
+          <h2 class="xs">Status</h2>
+          <p class="sub">{{ item.metadata.status | default: 'n.p.' }}</p>
+        </li>
+        <li>
+          <h2 class="xs">Aantal exemplaren</h2>
+          <p class="sub">{{ item.metadata.aantal_exemplaren | default: 'n.p.' }}</p>
+        </li>
+      </ul>
+      <div class="extra">
+        <h2 class="xs">
+          UBN <span class="sub">{{ item.metadata.uniek_boek_nummer_label | capitalize }}</span>
+        </h2>
+        <p class="sub">{{ item.metadata.uniek_boek_nummer | default: 'n.v.t.' }}</p>
+      </div>
     </div>
-    <div class="extra">
-      <h2 class="xs">UBN <span class="sub">{{ item.metadata.uniek_boek_nummer_label | capitalize }}</span></h2>
-      <p class="sub">{{ item.metadata.uniek_boek_nummer | default: 'n.v.t.' }}</p>
+    <div id="comment">
+      <h2 class="default">Reacties</h2>
+      <p class="sub">{{ amount | default: 0 }} reacties</p>
     </div>
-  </div>
-  <div id="comment">
-    <h2 class="default">Reacties</h2>
-    <p class="sub">{{ amount | default: 0 }} reacties</p>
-  </div>
-  <div id="media">
-    <h2 class="default">Media</h2>
-  </div>
-  <nav>
-    <ul class="tabs">
-      <li><a href="#info">Info</a></li>
-      <li>
-        <a href="#comment">{{ amount | default: 0 }} Reacties</a>
-      </li>
-      <li><a href="#media">Media</a></li>
-    </ul>
+    <div id="media">
+      <h2 class="default">Media</h2>
+    </div>
+    <nav>
+      <ul class="tabs">
+        <li><a href="#info">Info</a></li>
+        <li>
+          <a href="#comment">{{ amount | default: 0 }} Reacties</a>
+        </li>
+        <li><a href="#media">Media</a></li>
+      </ul>
     </nav>
   </main>
   <aside class="book">
@@ -85,18 +101,18 @@
           width="{{ image_asset.large.width }}"
           height="{{ image_asset.large.height }}"
         >
-        <img 
-          src="{{ image_asset.medium.url }}" 
+        <img
+          src="{{ image_asset.medium.url }}"
           alt="{{ item.metadata.titel | default: 'n.v.t.' }}"
           width="{{ image_asset.medium.width }}"
           height="{{ image_asset.medium.height }}"
         >
       </picture>
       {% if navigation.prev_page != null and navigation.next_page != null %}
-      <nav class="img-nav">
+        <nav class="img-nav">
           <a href="/catalogus/{{ navigation.id }}?page={{ navigation.prev_page }}">Vorige</a>
           <a href="/catalogus/{{ navigation.id }}?page={{ navigation.next_page }}">Volgende</a>
-      </nav>
+        </nav>
       {% endif %}
     {% else %}
       <p>Geen afbeelding beschikbaar.</p>
