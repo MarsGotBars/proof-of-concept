@@ -4,6 +4,14 @@ header {
   max-height: 37.5rem;
 }
 
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+/* MARK: HEADER COMPONENTS
+*/
+
 header img {
   height: 22rem;
   object-fit: cover;
@@ -11,10 +19,14 @@ header img {
   flex: 1;
 }
 
-.wrapper {
-  display: flex;
-  width: 100%;
+div.circle {
+  transform: translateY(-60%);
+  flex-shrink: 0;
+  background: var(--blue);
 }
+
+/* MARK: NAVIGATION
+*/
 
 nav {
   flex: 1;
@@ -29,16 +41,6 @@ nav ul li ul {
   display: none;
 }
 
-div.circle {
-  /* position: absolute;
-  top: 2rem;
-  left: 50%;
-  */
-  transform: translateY(-60%);
-  flex-shrink: 0;
-  background: var(--blue);
-}
-
 h1 {
   padding: var(--space-circle-lg);
   text-align: center;
@@ -49,30 +51,20 @@ h1 > span:nth-child(1) {
 }
 
 /* MARK: FORM & FILTERS
- */
+*/
+
 form {
+  display: flex;
+  justify-content: space-between;
   border-top: var(--border-sm);
   border-bottom: var(--border-sm);
   padding: 1.25rem 2rem;
-  justify-content: space-between;
 }
 
-form details[open] svg {
-  transform: rotate(180deg);
-}
-
-form,
 .filters {
   display: flex;
-}
-
-.filters {
   gap: 1.5rem;
-}
-
-.search button {
-  background: var(--white);
-  color: var(--blue);
+  z-index: 2;
 }
 
 .search {
@@ -80,6 +72,7 @@ form,
   gap: 0;
 }
 
+/* Form Elements */
 .filters summary,
 .search > * {
   padding: 0.25rem 0.75rem;
@@ -90,6 +83,12 @@ form,
   border-right: 0;
 }
 
+.search button {
+  background: var(--white);
+  color: var(--blue);
+}
+
+/* Form Details/Dropdowns */
 form details {
   position: relative;
 }
@@ -98,12 +97,106 @@ form summary {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  z-index: 2;
 }
 
-details > *:nth-child(2) {
+form details[open] svg {
+  transform: rotate(180deg);
+}
+
+form details > *:nth-child(2) {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 0.5rem);
   left: 0;
   background: var(--blue);
   border: var(--border-sm);
+  border-color: var(--white);
+  min-width: 100%;
+  width: max-content;
+  padding: .5rem;
+}
+
+input:checked + span {
+  color: var(--gold);
+}
+
+/* MARK: ITEMS LIST/GRID
+*/
+
+.items-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.items-list > li {
+  border: var(--border-sm);
+}
+
+/* Item Links */
+.items-list > li > a {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  height: 100%;
+}
+
+/* Item Images */
+.items-list > li img {
+  max-height: 14.375rem;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+
+/* Item Titles */
+.items-list h2 {
+  padding: 0.5rem;
+}
+
+/* MARK: ITEM DETAILS/INFO
+*/
+
+.items-list > li details {
+  padding: 0.5rem;
+  margin-top: auto;
+  position: relative;
+}
+
+.items-list > li details > * {
+  flex: 1;
+  text-align: center;
+  border: var(--border-sm);
+  border-color: var(--white);
+}
+
+.items-list > li details > *,
+.items-list > li details summary {
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+/* Details Dropdown Content */
+.items-list > li details div {
+  position: absolute;
+  top: calc(100% - 0.25rem);
+  width: calc(100% - 1rem);
+  background: var(--blue);
+  border: var(--border-sm);
+  border-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem;
+}
+
+/* Details Content Spacing */
+.items-list details div h3 + p {
+  margin-top: 0.5rem;
+}
+
+.items-list details div p + h3 {
+  margin-top: 1rem;
 }

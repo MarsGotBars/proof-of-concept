@@ -83,7 +83,7 @@
                     checked
                   {% endif %}
                 >
-                {{ entry[0] }} ({{ entry[1] }})
+                <span>{{ entry[0] }}</span> ({{ entry[1] }})
               </label>
             </li>
           {% endfor %}
@@ -105,7 +105,7 @@
                     checked
                   {% endif %}
                 >
-                {{ year_value }} ({{ entry[1] }})
+                <span>{{ year_value }}</span> ({{ entry[1] }})
               </label>
             </li>
           {% endfor %}
@@ -127,7 +127,7 @@
                     checked
                   {% endif %}
                 >
-                {{ entry[0] }} ({{ entry[1] }})
+                <span>{{ entry[0] }}</span> ({{ entry[1] }})
               </label>
             </li>
           {% endfor %}
@@ -138,32 +138,66 @@
       <input type="text" name="search" placeholder="Zoekopdracht..." value="{{ filters.search }}">
       <button type="submit">Zoeken</button>
     </div>
-    
   </form>
   {% comment %} {% if items %} {% endcomment %}
-  <ul>
+  <ul class="items-list">
     {% for item in items %}
       {% assign metadata = item.metadata %}
       {% assign auteurs = metadata.auteur | split: '; ' %}
       <li>
-        <picture>
-          <source srcset="{{ item.asset.medium.url }}" type="image/jpg" media="(max-width: 880px)" width="{{ item.asset.medium.width }}" height="{{ item.asset.medium.height }}">
-          <source srcset="{{ item.asset.fluid.url }}" type="image/jpg" media="(max-width: 1140px)" width="{{ item.asset.fluid.width }}" height="{{ item.asset.fluid.height }}">
-          <source srcset="{{ item.asset.large.url }}" type="image/jpg" width="{{ item.asset.large.width }}" height="{{ item.asset.large.height }}">
-          <img src="{{ item.asset.medium.url }}" alt="" {% if forloop.index > 6 %}loading="lazy"{% endif %} width="{{ item.asset.medium.width }}" height="{{ item.asset.medium.height }}">
-        </picture>
         <a href="/catalogus/{{ item.id }}">
-          <h2 class="md">{{ metadata.titel }}</h2>
+          <picture>
+            <source
+              srcset="{{ item.asset.medium.url }}"
+              type="image/jpg"
+              media="(max-width: 880px)"
+              width="{{ item.asset.medium.width }}"
+              height="{{ item.asset.medium.height }}"
+            >
+            <source
+              srcset="{{ item.asset.fluid.url }}"
+              type="image/jpg"
+              media="(max-width: 1140px)"
+              width="{{ item.asset.fluid.width }}"
+              height="{{ item.asset.fluid.height }}"
+            >
+            <source
+              srcset="{{ item.asset.large.url }}"
+              type="image/jpg"
+              width="{{ item.asset.large.width }}"
+              height="{{ item.asset.large.height }}"
+            >
+            <img
+              src="{{ item.asset.medium.url }}"
+              alt=""
+              {% if forloop.index > 6 %}
+                loading="lazy"
+              {% endif %}
+              width="{{ item.asset.medium.width }}"
+              height="{{ item.asset.medium.height }}"
+            >
+          </picture>
+
+          <h2 class="md">{{ metadata.titel | truncate: 65 }}</h2>
+
+          <details class="default">
+            <summary>Info {% render 'partials/icons/triangle' %}</summary>
+            <div>
+              <h3 class="default">{{ metadata.auteur_label | capitalize }}</h3>
+              {% for auteur in auteurs %}
+                <p class="sub">{{ auteur }}</p>
+              {% endfor %}
+              <h3 class="default">{{ metadata.jaar_label | capitalize }}</h3>
+              <p class="sub">{{ metadata.jaar }}</p>
+              <h3 class="default">{{ metadata.plaats_van_uitgave_label | capitalize }}</h3>
+              <p class="sub">{{ metadata.plaats_van_uitgave }}</p>
+            </div>
+          </details>
         </a>
-        <h3 class="sm">{{ metadata.auteur_label }}</h3>
-        {% for auteur in auteurs %}
-          <p>{{ auteur }}</p>
-        {% endfor %}
-        <h3 class="sm">{{ metadata.jaar_label }}</h3>
-        <p>{{ metadata.jaar }}</p>
-        <h3 class="sm">{{ metadata.plaats_van_uitgave_label }}</h3>
-        <p>{{ metadata.plaats_van_uitgave }}</p>
       </li>
+
+    {% else %}
+      <p>Geen resultaten gevonden</p>
     {% endfor %}
   </ul>
 
