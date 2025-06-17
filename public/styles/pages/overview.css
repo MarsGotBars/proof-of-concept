@@ -54,11 +54,16 @@ h1 > span:nth-child(1) {
 */
 
 form {
+  position: sticky;
+  top: 1rem;
+  background: var(--blue);
   display: flex;
   justify-content: space-between;
   border-top: var(--border-sm);
   border-bottom: var(--border-sm);
   padding: 1.25rem 2rem;
+  z-index: 2;
+  box-shadow: 0 -1rem 0 0 var(--blue);
 }
 
 .filters {
@@ -199,4 +204,14 @@ input:checked + span {
 
 .items-list details div p + h3 {
   margin-top: 1rem;
+}
+
+/* MARK: FOOTER
+*/
+
+footer {
+  border-top: var(--border-sm);
+  height: 18rem;
+  display: grid;
+  place-items: center;
 }
