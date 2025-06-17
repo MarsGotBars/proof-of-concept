@@ -66,7 +66,7 @@
 </header>
 <main>
   <form action="/catalogus" method="get">
-    <div class="filters">
+    <div class="filters-desktop">
       <details name="filters">
         <summary>Auteur {% render 'partials/icons/triangle' %}</summary>
         <ul>
@@ -138,6 +138,77 @@
       <input type="text" name="search" placeholder="Zoekopdracht..." value="{{ filters.search }}">
       <button type="submit">Zoeken</button>
     </div>
+    <details class="filters-mobile">
+      <summary>Filters {% render 'partials/icons/triangle' %}</summary>
+      <div class="filters-mobile-content">
+      <details name="filters">
+        <summary>Auteur {% render 'partials/icons/triangle' %}</summary>
+        <ul>
+          {% assign auteur_array = aggregations.auteur | entries %}
+          {% for entry in auteur_array %}
+            <li>
+              <label for="auteur-{{ entry[0] }}">
+                <input
+                  type="checkbox"
+                  name="auteur"
+                  value="{{ entry[0] }}"
+                  id="auteur-{{ entry[0] }}"
+                  {% if filters.auteur contains entry[0] %}
+                    checked
+                  {% endif %}
+                >
+                <span>{{ entry[0] }}</span> ({{ entry[1] }})
+              </label>
+            </li>
+          {% endfor %}
+        </ul>
+      </details>
+      <details name="filters">
+        <summary>Jaar {% render 'partials/icons/triangle' %}</summary>
+        <ul>
+          {% for entry in aggregations.jaar %}
+            {% assign year_value = entry[0] %}
+            <li>
+              <label for="jaar-{{ year_value | escape }}">
+                <input
+                  type="checkbox"
+                  name="jaar"
+                  value="{{ year_value | escape }}"
+                  id="jaar-{{ year_value | escape }}"
+                  {% if filters.jaar contains year_value %}
+                    checked
+                  {% endif %}
+                >
+                <span>{{ year_value }}</span> ({{ entry[1] }})
+              </label>
+            </li>
+          {% endfor %}
+        </ul>
+      </details>
+      <details name="filters">
+        <summary>Plaats van publicatie {% render 'partials/icons/triangle' %}</summary>
+        <ul>
+          {% assign plaats_array = aggregations.plaats_van_uitgave | entries %}
+          {% for entry in plaats_array %}
+            <li>
+              <label for="plaats-{{ entry[0] }}">
+                <input
+                  type="checkbox"
+                  name="plaats_van_uitgave"
+                  value="{{ entry[0] }}"
+                  id="plaats-{{ entry[0] }}"
+                  {% if filters.plaats_van_uitgave contains entry[0] %}
+                    checked
+                  {% endif %}
+                >
+                <span>{{ entry[0] }}</span> ({{ entry[1] }})
+              </label>
+            </li>
+          {% endfor %}
+        </ul>
+      </details>
+      </div>
+    </details>
   </form>
   {% comment %} {% if items %} {% endcomment %}
   <ul class="items-list">
