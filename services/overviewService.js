@@ -28,6 +28,38 @@ class OverviewService {
   }
 
   /**
+   * Normalizes author input to a consistent string format.
+   * 
+   * @param {string|Array} authorInput - The original author string or array
+   * @returns {string} Single author string, multiple authors separated by '; '
+   */
+  normalizeAuthors(authorInput) {
+    if (!authorInput) {
+      return "anonymous";
+    }
+
+    // Behandel array invoer - voeg samen met komma en spatie
+    if (Array.isArray(authorInput)) {
+      return authorInput.join(', ');
+    }
+
+    // Behandel niet-string invoer
+    if (typeof authorInput !== 'string') {
+      return "anonymous";
+    }
+
+    // Voor string invoer, verwijder haakjes indien aanwezig en geef terug
+    let cleaned = authorInput.trim();
+    
+    // Verwijder omliggende haakjes als ze bestaan
+    if (cleaned.startsWith('[') && cleaned.endsWith(']')) {
+      cleaned = cleaned.slice(1, -1).trim();
+    }
+    
+    return cleaned;
+  }
+
+  /**
    * Haalt ruwe data op van de API of uit de cache.
    * 
    * Verandert de oude metadata-indeling (array) naar objectvorm.
@@ -83,6 +115,12 @@ class OverviewService {
         });
 
         const transformedItem = { ...item, metadata: metaObj };
+        
+        // Pas auteur veld aan voor consistentie
+        if (transformedItem.metadata.auteur) {
+          transformedItem.metadata.auteur = this.normalizeAuthors(transformedItem.metadata.auteur);
+        }
+        
         return addLabelFields(transformedItem);
       }).filter(item => item !== null);
 
