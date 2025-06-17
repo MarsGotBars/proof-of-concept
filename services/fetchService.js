@@ -40,7 +40,7 @@ class FetchService {
   }
 
   /**
-   * Verwerkt de asset-gegevens door afmetingen toe te voegen
+   * Verwerkt de asset-gegevens door afmetingen toe te voegen (voor overview data)
    * 
    * @async
    * @param {Object} asset - Het asset-object met afbeeldings-URLs
@@ -49,18 +49,43 @@ class FetchService {
   async processAsset(asset) {
     if (!asset) return null;
 
-    const dimensionsPromises = Object.entries(asset).map(async ([size, url]) => {
-      if (!url || typeof url !== 'string') return [size, { url }];
+    const processedAsset = {};
+    
+    for (const [size, url] of Object.entries(asset)) {
+      if (!url || typeof url !== 'string') {
+        processedAsset[size] = {
+          url: url || '',
+          width: null,
+          height: null,
+          format: null,
+          size: null
+        };
+        continue;
+      }
       
       const dimensions = await this.getImageDimensions(url);
-      return [size, {
-        url,
-        ...dimensions
-      }];
-    });
+      
+      if (dimensions) {
+        processedAsset[size] = {
+          url,
+          width: dimensions.width,
+          height: dimensions.height,
+          format: dimensions.format,
+          size: dimensions.size
+        };
+      } else {
+        // Fallback when dimensions can't be fetched
+        processedAsset[size] = {
+          url,
+          width: null,
+          height: null,
+          format: null,
+          size: null
+        };
+      }
+    }
 
-    const processedEntries = await Promise.all(dimensionsPromises);
-    return Object.fromEntries(processedEntries);
+    return processedAsset;
   }
 
   /**
@@ -82,21 +107,6 @@ class FetchService {
       
       const data = await response.json();
 
-      // Verwerk afbeeldingsgegevens als het een array van items is
-      if (Array.isArray(data)) {
-        return Promise.all(data.map(async (item) => {
-          if (item.asset) {
-            item.asset = await this.processAsset(item.asset);
-          }
-          return item;
-        }));
-      }
-      
-      // Verwerk afbeeldingsgegevens als het een enkel item is
-      if (data.asset) {
-        data.asset = await this.processAsset(data.asset);
-      }
-      
       return data;
     } catch (error) {
       console.error(`API fetch mislukt voor ${endpoint}:`, error.message);

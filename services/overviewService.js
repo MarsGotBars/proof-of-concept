@@ -73,12 +73,22 @@ class OverviewService {
         return await CacheService.get(this.cacheKey);
       }
 
-      const rawData = await this.FetchService.get("/overview");
+      let rawData = await this.FetchService.get("/overview");
 
       if (!Array.isArray(rawData)) {
         console.error("API response is geen array:", rawData);
         throw new Error("Ongeldig API-responsformaat");
       }
+      
+      // Process all images simultaneously
+      console.log(`Processing ${rawData.length} items with images...`);
+      rawData = await Promise.all(rawData.map(async (item) => {
+        if (item && item.asset) {
+          item.asset = await this.FetchService.processAsset(item.asset);
+        }
+        return item;
+      }));
+      console.log('Image processing completed.');
 
       const transformedData = rawData.map((item, index) => {
         if (!item) {
