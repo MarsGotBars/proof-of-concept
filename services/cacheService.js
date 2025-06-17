@@ -126,7 +126,6 @@ async clear() {
       .map((file) => fs.unlink(path.join(this.cacheDir, file)));
 
     await Promise.all(deletePromises);
-    console.log("Cache cleared");
   } catch (error) {
     console.error("Cache clear failed:", error.message);
   }
