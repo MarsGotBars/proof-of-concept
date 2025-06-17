@@ -28,6 +28,10 @@ class DataHandlerService {
     if (!Array.isArray(data)) return [];
 
     let filtered = [...data];
+    
+    console.log('Filtering with:', filters);
+
+
 
     // Alleen zoeken als er een niet-lege zoekterm is
     if (filters.search && filters.search.trim() !== "") {
@@ -53,11 +57,13 @@ class DataHandlerService {
 
     // Elk filter wordt apart toegepast (OR condition tussen filters)
     Object.entries(fieldFilters).forEach(([field, value]) => {
-      // Skip empty values
+      // Sla lege waarden over
       if (value == null || value === "" || value === "all") return;
 
       // Converteer waarde naar array als het nog niet al een array is
       const filterValues = Array.isArray(value) ? value : [value];
+      
+      console.log(`Applying filter for ${field}:`, filterValues);
 
       // Voor elk veld, willen we match ANY van de filterwaarden (OR condition)
       filtered = filtered.filter((item) => {
@@ -67,6 +73,29 @@ class DataHandlerService {
 
         // Converteer veldwaarde naar string voor vergelijking
         const itemValue = String(fieldValue);
+
+        // Speciale behandeling voor auteur veld - controleer of auteur string overeenkomt met filterwaarden
+        if (field === 'auteur') {
+          const authorString = this.getFieldValue(item, 'auteur');
+          console.log(`  Item author: "${authorString}"`);
+          
+          if (authorString && typeof authorString === 'string') {
+            // Splits de auteur string terug naar individuele auteurs en check voor overeenkomsten
+            const authors = authorString.split('; ').map(a => a.trim());
+            console.log(`  Split authors:`, authors);
+            
+            const matches = filterValues.some(filterValue => 
+              authors.some(author => {
+                const match = String(author).trim() === String(filterValue).trim();
+                console.log(`    "${author}" === "${filterValue}" ? ${match}`);
+                return match;
+              })
+            );
+            console.log(`  Final match result: ${matches}`);
+            return matches;
+          }
+          // Terugval naar originele logica als er geen auteur data is
+        }
 
         // Controleer of ANY van de filterwaarden overeenkomt (OR condition)
         return filterValues.some((filterValue) => {
@@ -240,11 +269,20 @@ class DataHandlerService {
     };
 
     // Hulpfunctie om filterwaarden te normaliseren
-    const normalizeFilterValues = (values) => {
+    const normalizeFilterValues = (values, fieldName) => {
       if (!values) return [];
       // Verwerk zowel arrays als strings
       const valueArray = Array.isArray(values) ? values : [values];
-      // Splits komma-gescheiden strings, decodeer URL-codering en maak het resultaat plat
+      
+      // For author field, don't split on commas since author names contain commas
+      if (fieldName === 'auteur') {
+        return valueArray.map((v) => {
+          if (typeof v !== "string") return v;
+          return decodeURIComponent(v.trim());
+        });
+      }
+      
+      // For other fields, split comma-separated strings
       return valueArray.flatMap((v) => {
         if (typeof v !== "string") return v;
         return v.split(",").map((s) => decodeURIComponent(s.trim()));
@@ -254,10 +292,22 @@ class DataHandlerService {
     fields.forEach((field) => {
       const counts = {};
       data.forEach((item) => {
-        const value = this.getFieldValue(item, field);
-        if (value != null) {
-          // Sla de exacte waarde op zoals deze is
-          counts[value] = (counts[value] || 0) + 1;
+        // Special handling for author field - split on semicolons to count individual authors
+        if (field === 'auteur') {
+          const authorString = this.getFieldValue(item, 'auteur');
+          if (authorString && typeof authorString === 'string') {
+            // Split on semicolons to get individual authors and count each one
+            const authors = authorString.split(';').map(a => a.trim()).filter(a => a !== '');
+            authors.forEach(author => {
+              counts[author] = (counts[author] || 0) + 1;
+            });
+          }
+        } else {
+          const value = this.getFieldValue(item, field);
+          if (value != null) {
+            // Sla de exacte waarde op zoals deze is
+            counts[value] = (counts[value] || 0) + 1;
+          }
         }
       });
 
@@ -265,7 +315,14 @@ class DataHandlerService {
       const entries = Object.entries(counts);
 
       // Haal filterwaarden voor dit veld op en normaliseer ze
-      const filterValues = normalizeFilterValues(currentFilters[field]);
+      const filterValues = normalizeFilterValues(currentFilters[field], field);
+
+      // Debug logging for auteur field
+      if (field === 'auteur') {
+        console.log('Current auteur filters:', currentFilters[field]);
+        console.log('Normalized filter values:', filterValues);
+        console.log('Available authors before sorting:', entries.map(([name, count]) => `${name} (${count})`));
+      }
 
       entries.sort(([aValue, aCount], [bValue, bCount]) => {
         // Speciale afhandeling voor jaar veld
