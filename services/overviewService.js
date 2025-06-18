@@ -64,10 +64,11 @@ class OverviewService {
    * 
    * Verandert de oude metadata-indeling (array) naar objectvorm.
    * 
+   * @param {Object} [options={}] Verwerkingsopties.
    * @returns {Promise<Object[]>} Een lijst met getransformeerde items.
    * @throws {Error} Als het ophalen of transformeren mislukt.
    */
-  async getRawData() {
+  async getRawData({ processImages = true } = {}) {
     try {
       if (await CacheService.isValid(this.cacheKey, this.cacheExpiry)) {
         return await CacheService.get(this.cacheKey);
@@ -80,15 +81,19 @@ class OverviewService {
         throw new Error("Ongeldig API-responsformaat");
       }
       
-      // Process all images simultaneously
-      console.log(`Processing ${rawData.length} items with images...`);
-      rawData = await Promise.all(rawData.map(async (item) => {
-        if (item && item.asset) {
-          item.asset = await this.FetchService.processAsset(item.asset);
-        }
-        return item;
-      }));
-      console.log('Image processing completed.');
+      if (processImages) {
+        // Process all images simultaneously – this is heavy but only needed for overview pages
+        console.log(`Processing ${rawData.length} items with images...`);
+        rawData = await Promise.all(rawData.map(async (item) => {
+          if (item && item.asset) {
+            item.asset = await this.FetchService.processAsset(item.asset);
+          }
+          return item;
+        }));
+        console.log("Image processing completed.");
+      } else {
+        console.log("Skipping image processing for fast ID lookup");
+      }
 
       const transformedData = rawData.map((item, index) => {
         if (!item) {
@@ -134,7 +139,11 @@ class OverviewService {
         return addLabelFields(transformedItem);
       }).filter(item => item !== null);
 
-      await CacheService.set(this.cacheKey, transformedData);
+      // Alleen cachen wanneer de assets volledig verwerkt zijn. Zo houden we de cache
+      // bruikbaar voor routes die de afbeeldingsdimensies daadwerkelijk nodig hebben.
+      if (processImages) {
+        await CacheService.set(this.cacheKey, transformedData);
+      }
       return transformedData;
     } catch (error) {
       console.error("Ophalen van ruwe data mislukt:", error);
