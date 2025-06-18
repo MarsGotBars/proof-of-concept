@@ -315,3 +315,7 @@ main nav {
   background-color: var(--blue);
 }
 
+aside.book {
+  view-transition-name: book-image;
+}
+
