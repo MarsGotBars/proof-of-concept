@@ -1,5 +1,5 @@
 import FetchService from "./fetchService.js";
-import CacheService from "./CacheService.js";
+import CacheService from "./cacheService.js";
 import DataHandlerService from "./dataHandlerService.js";
 import { addLabelFields } from "../utils/createLabelFields.js";
 
