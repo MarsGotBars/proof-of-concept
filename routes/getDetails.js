@@ -78,7 +78,6 @@ router.get("/catalogus/:id", async function (request, response) {
     
   } catch (error) {
     console.error('Fout in detail route:', error);
-    response.status(500).send("Er is een fout opgetreden bij het laden van het item");
   }
 });
 

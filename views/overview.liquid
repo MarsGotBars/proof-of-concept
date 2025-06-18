@@ -3,282 +3,224 @@
   , title: "Online catalogus"
 %}
 {% block head %}
-<link rel="stylesheet" href="./styles/general.css">
-<link rel="stylesheet" href="./styles/components/pagination.css">
-<link rel="stylesheet" href="./styles/pages/overview.css">
-<script type="module" src="./scripts/infiniteScroll.js"></script>
+  <link rel="stylesheet" href="./styles/general.css">
+  <link rel="stylesheet" href="./styles/components/pagination.css">
+  <link rel="stylesheet" href="./styles/pages/overview.css">
+  <script type="module" src="./scripts/infiniteScroll.js"></script>
 {% endblock %}
 {% block content %}
-<header>
-  <img src="/assets/images/overview.jpg" alt="" height="352" width="1400">
-  <div class="wrapper">
-    <nav>
-      <ul>
-        <li>
-          test
-          <ul>
-            <li>link1</li>
-            <li>link2</li>
-            <li>link3</li>
-            <li>link4</li>
-          </ul>
-        </li>
-        <li>
-          test2
-          <ul>
-            <li>link1</li>
-            <li>link2</li>
-            <li>link3</li>
-            <li>link4</li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-    <div class="circle">
-      <h1 class="xxl">
-        <span>O</span>nline <br>
-        catal<span>o</span>gus
-      </h1>
-    </div>
-    <nav>
-      <ul>
-        <li>
-          test
-          <ul>
-            <li>link1</li>
-            <li>link2</li>
-            <li>link3</li>
-            <li>link4</li>
-          </ul>
-        </li>
-        <li>
-          test
-          <ul>
-            <li>link1</li>
-            <li>link2</li>
-            <li>link3</li>
-            <li>link4</li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header>
-<main>
-  <form action="/catalogus" method="get">
-    <div class="filters-desktop">
-      <details name="filters">
-        <summary>Auteur {% render 'partials/icons/triangle' %}</summary>
+  <header>
+    <img
+      src="/assets/images/overview.jpg"
+      alt=""
+      height="352"
+      width="1400">
+    <div class="wrapper">
+      <nav>
         <ul>
-          {% assign auteur_array = aggregations.auteur | entries %}
-          {% for entry in auteur_array %}
-            <li>
-              <label for="auteur-{{ entry[0] }}">
-                <input
-                  type="checkbox"
-                  name="auteur"
-                  value="{{ entry[0] }}"
-                  id="auteur-{{ entry[0] }}"
-                  {% if filters.auteur contains entry[0] %}
-                    checked
-                  {% endif %}
-                >
-                <span>{{ entry[0] }}</span> ({{ entry[1] }})
-              </label>
-            </li>
-          {% endfor %}
+          <li>
+            test
+            <ul>
+              <li>link1</li>
+              <li>link2</li>
+              <li>link3</li>
+              <li>link4</li>
+            </ul>
+          </li>
+          <li>
+            test2
+            <ul>
+              <li>link1</li>
+              <li>link2</li>
+              <li>link3</li>
+              <li>link4</li>
+            </ul>
+          </li>
         </ul>
-      </details>
-      <details name="filters">
-        <summary>Jaar {% render 'partials/icons/triangle' %}</summary>
-        <ul>
-          {% for entry in aggregations.jaar %}
-            {% assign year_value = entry[0] %}
-            <li>
-              <label for="jaar-{{ year_value | escape }}">
-                <input
-                  type="checkbox"
-                  name="jaar"
-                  value="{{ year_value | escape }}"
-                  id="jaar-{{ year_value | escape }}"
-                  {% if filters.jaar contains year_value %}
-                    checked
-                  {% endif %}
-                >
-                <span>{{ year_value }}</span> ({{ entry[1] }})
-              </label>
-            </li>
-          {% endfor %}
-        </ul>
-      </details>
-      <details name="filters">
-        <summary>Plaats van publicatie {% render 'partials/icons/triangle' %}</summary>
-        <ul>
-          {% assign plaats_array = aggregations.plaats_van_uitgave | entries %}
-          {% for entry in plaats_array %}
-            <li>
-              <label for="plaats-{{ entry[0] }}">
-                <input
-                  type="checkbox"
-                  name="plaats_van_uitgave"
-                  value="{{ entry[0] }}"
-                  id="plaats-{{ entry[0] }}"
-                  {% if filters.plaats_van_uitgave contains entry[0] %}
-                    checked
-                  {% endif %}
-                >
-                <span>{{ entry[0] }}</span> ({{ entry[1] }})
-              </label>
-            </li>
-          {% endfor %}
-        </ul>
-      </details>
-    </div>
-    <div class="search">
-      <input type="text" name="search" placeholder="Zoekopdracht..." value="{{ filters.search }}">
-      <button type="submit">Zoeken</button>
-    </div>
-    <details class="filters-mobile">
-      <summary>Filters {% render 'partials/icons/triangle' %}</summary>
-      <div class="filters-mobile-content">
-      <details name="filters">
-        <summary>Auteur {% render 'partials/icons/triangle' %}</summary>
-        <ul>
-          {% assign auteur_array = aggregations.auteur | entries %}
-          {% for entry in auteur_array %}
-            <li>
-              <label for="auteur-{{ entry[0] }}">
-                <input
-                  type="checkbox"
-                  name="auteur"
-                  value="{{ entry[0] }}"
-                  id="auteur-{{ entry[0] }}"
-                  {% if filters.auteur contains entry[0] %}
-                    checked
-                  {% endif %}
-                >
-                <span>{{ entry[0] }}</span> ({{ entry[1] }})
-              </label>
-            </li>
-          {% endfor %}
-        </ul>
-      </details>
-      <details name="filters">
-        <summary>Jaar {% render 'partials/icons/triangle' %}</summary>
-        <ul>
-          {% for entry in aggregations.jaar %}
-            {% assign year_value = entry[0] %}
-            <li>
-              <label for="jaar-{{ year_value | escape }}">
-                <input
-                  type="checkbox"
-                  name="jaar"
-                  value="{{ year_value | escape }}"
-                  id="jaar-{{ year_value | escape }}"
-                  {% if filters.jaar contains year_value %}
-                    checked
-                  {% endif %}
-                >
-                <span>{{ year_value }}</span> ({{ entry[1] }})
-              </label>
-            </li>
-          {% endfor %}
-        </ul>
-      </details>
-      <details name="filters">
-        <summary>Plaats van publicatie {% render 'partials/icons/triangle' %}</summary>
-        <ul>
-          {% assign plaats_array = aggregations.plaats_van_uitgave | entries %}
-          {% for entry in plaats_array %}
-            <li>
-              <label for="plaats-{{ entry[0] }}">
-                <input
-                  type="checkbox"
-                  name="plaats_van_uitgave"
-                  value="{{ entry[0] }}"
-                  id="plaats-{{ entry[0] }}"
-                  {% if filters.plaats_van_uitgave contains entry[0] %}
-                    checked
-                  {% endif %}
-                >
-                <span>{{ entry[0] }}</span> ({{ entry[1] }})
-              </label>
-            </li>
-          {% endfor %}
-        </ul>
-      </details>
+      </nav>
+      <div class="circle">
+        <h1 class="xxl">
+          <span>O</span>nline <br>
+          catal<span>o</span>gus
+        </h1>
       </div>
-    </details>
-  </form>
-  {% comment %} {% if items %} {% endcomment %}
-  <ul class="items-list">
-    {% for item in items %}
-      {% assign metadata = item.metadata %}
-      {% assign auteurs = metadata.auteur | split: '; ' %}
-      <li>
-        <a href="/catalogus/{{ item.id }}">
-          <picture>
-            <source
-              srcset="{{ item.asset.medium.url }}"
-              type="image/jpg"
-              media="(max-width: 880px)"
-              width="{{ item.asset.medium.width }}"
-              height="{{ item.asset.medium.height }}"
-            >
-            <source
-              srcset="{{ item.asset.fluid.url }}"
-              type="image/jpg"
-              media="(max-width: 1140px)"
-              width="{{ item.asset.fluid.width }}"
-              height="{{ item.asset.fluid.height }}"
-            >
-            <source
-              srcset="{{ item.asset.large.url }}"
-              type="image/jpg"
-              width="{{ item.asset.large.width }}"
-              height="{{ item.asset.large.height }}"
-            >
-            <img
-              src="{{ item.asset.medium.url }}"
-              alt=""
-              {% if forloop.index > 4 %}
-                loading="lazy"
-              {% endif %}
-              width="{{ item.asset.medium.width }}"
-              height="{{ item.asset.medium.height }}"
-            >
-          </picture>
-
-          <h2 class="md">{{ metadata.titel | truncate: 65 }}</h2>
-
-          <details class="default">
-            <summary>Info {% render 'partials/icons/triangle' %}</summary>
+      <nav>
+        <ul>
+          <li>
+            test
+            <ul>
+              <li>link1</li>
+              <li>link2</li>
+              <li>link3</li>
+              <li>link4</li>
+            </ul>
+          </li>
+          <li>
+            test
+            <ul>
+              <li>link1</li>
+              <li>link2</li>
+              <li>link3</li>
+              <li>link4</li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <form action="/catalogus" method="get">
+      <details class="filters">
+        <summary>Filters {% render 'partials/icons/triangle' %}</summary>
+        <div class="filters-content">
+          <details name="filters">
+            <summary>Auteur {% render 'partials/icons/triangle' %}</summary>
             <div>
-              <h3 class="default">Auteur</h3>
-              {% assign author_value = item.metadata.auteur | strip %}
-              <p class="sub">{% unless author_value == blank %}{{ author_value }}{% else %}n.p.{% endunless %}</p>
-              <h3 class="default">Jaar</h3>
-              <p class="sub">{{ metadata.jaar | default: "n.p." }}</p>
-              <h3 class="default">Plaats van publicatie</h3>
-              <p class="sub">{{ metadata.plaats_van_uitgave | default: "n.p." }}</p>
+              <ul>
+                {% assign auteur_array = aggregations.auteur | entries %}
+                {% for entry in auteur_array %}
+                  <li>
+                    <label for="auteur-{{ entry[0] }}">
+                      <input
+                        type="checkbox"
+                        name="auteur"
+                        value="{{ entry[0] }}"
+                        id="auteur-{{ entry[0] }}"
+                        {% if filters.auteur contains entry[0] %}
+                        checked
+                        {% endif %}>
+                      <span>{{ entry[0] }}</span>
+                      ({{ entry[1] }})
+                    </label>
+                  </li>
+                {% endfor %}
+              </ul>
             </div>
           </details>
-        </a>
-      </li>
+          <details name="filters">
+            <summary>Jaar {% render 'partials/icons/triangle' %}</summary>
+            <ul>
+              {% for entry in aggregations.jaar %}
+                {% assign year_value = entry[0] %}
+                <li>
+                  <label for="jaar-{{ year_value | escape }}">
+                    <input
+                      type="checkbox"
+                      name="jaar"
+                      value="{{ year_value | escape }}"
+                      id="jaar-{{ year_value | escape }}"
+                      {% if filters.jaar contains year_value %}
+                      checked
+                      {% endif %}>
+                    <span>{{ year_value }}</span>
+                    ({{ entry[1] }})
+                  </label>
+                </li>
+              {% endfor %}
+            </ul>
+          </details>
+          <details name="filters">
+            <summary>Plaats van publicatie {% render 'partials/icons/triangle' %}</summary>
+            <ul>
+              {% assign plaats_array = aggregations.plaats_van_uitgave | entries %}
+              {% for entry in plaats_array %}
+                <li>
+                  <label for="plaats-{{ entry[0] }}">
+                    <input
+                      type="checkbox"
+                      name="plaats_van_uitgave"
+                      value="{{ entry[0] }}"
+                      id="plaats-{{ entry[0] }}"
+                      {% if filters.plaats_van_uitgave contains entry[0] %}
+                      checked
+                      {% endif %}>
+                    <span>{{ entry[0] }}</span>
+                    ({{ entry[1] }})
+                  </label>
+                </li>
+              {% endfor %}
+            </ul>
+          </details>
+        </div>
+      </details>
+      <div class="search">
+        <input
+          type="text"
+          name="search"
+          placeholder="Zoekopdracht..."
+          value="{{ filters.search }}">
+        <button type="submit">Zoeken</button>
+      </div>
+    </form>
+    {% comment %} {% if items %} {% endcomment %}
+    <ul class="items-list">
+      {% for item in items %}
+        {% assign metadata = item.metadata %}
+        {% assign auteurs = metadata.auteur | split: '; ' %}
+        <li>
+          <a href="/catalogus/{{ item.id }}">
+            <picture>
+              <source
+                srcset="{{ item.asset.medium.url }}"
+                type="image/jpg"
+                media="(max-width: 880px)"
+                width="{{ item.asset.medium.width }}"
+                height="{{ item.asset.medium.height }}">
+              <source
+                srcset="{{ item.asset.fluid.url }}"
+                type="image/jpg"
+                media="(max-width: 1140px)"
+                width="{{ item.asset.fluid.width }}"
+                height="{{ item.asset.fluid.height }}">
+              <source
+                srcset="{{ item.asset.large.url }}"
+                type="image/jpg"
+                width="{{ item.asset.large.width }}"
+                height="{{ item.asset.large.height }}">
+              <img
+                src="{{ item.asset.medium.url }}"
+                alt=""
+                {% if forloop.index > 4 %}
+                loading="lazy"
+                {% endif %}
+                width="{{ item.asset.medium.width }}"
+                height="{{ item.asset.medium.height }}">
+            </picture>
 
-    {% else %}
-      <p>Geen resultaten gevonden</p>
-    {% endfor %}
-  </ul>
+            <h2 class="md">{{ metadata.titel | truncate: 65 }}</h2>
 
-  {% if pagination.total > pagination.limit %}
-    {% render 'partials/pagination/pagination', pagination: pagination %}
-  {% endif %}
+            <details class="default">
+              <summary>Info {% render 'partials/icons/triangle' %}</summary>
+              <div>
+                <h3 class="default">Auteur</h3>
+                {% assign author_value = item.metadata.auteur | strip %}
+                <p class="sub">
+                  {% unless author_value == blank %}
+                    {{ author_value }}{% else %}n.p.{% endunless %}
+                </p>
+                <h3 class="default">Jaar</h3>
+                <p class="sub">{{ metadata.jaar | default: "n.p." }}</p>
+                <h3 class="default">Plaats van publicatie</h3>
+                <p class="sub">{{ metadata.plaats_van_uitgave | default: "n.p." }}</p>
+              </div>
+            </details>
+          </a>
+        </li>
+
+      {% else %}
+        <p>Geen resultaten gevonden</p>
+      {% endfor %}
+    </ul>
+
+    {% if pagination.total > pagination.limit %}
+      {% render 'partials/pagination/pagination'
+        , pagination: pagination %}
+    {% endif %}
   {% comment %} {% else %} {% endcomment %}
   {% comment %} Geen resultaten {% endcomment %}
   {% comment %} {% endif %} {% endcomment %}
-</main>
-<footer>
-  <p class="xl">The Embassy of the Free Mind</p>
-</footer>
+  </main>
+  <footer>
+    <p class="xl">The Embassy of the Free Mind</p>
+  </footer>
 {% endblock %}

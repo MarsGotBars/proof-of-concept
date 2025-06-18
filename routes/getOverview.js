@@ -126,9 +126,6 @@ router.get("/catalogus", async function (request, response) {
 
   } catch (error) {
     console.error('Fout in overview route:', error);
-    response.status(500).render("error", { 
-      message: "Er is een fout opgetreden bij het laden van de catalogus" 
-    });
   }
 });
 
@@ -148,9 +145,6 @@ router.post("/catalogus/refresh", async function (request, response) {
     response.redirect("/catalogus");
   } catch (error) {
     console.error('Fout bij cache vernieuwing:', error);
-    response.status(500).render("error", { 
-      message: "Er is een fout opgetreden bij het vernieuwen van de cache" 
-    });
   }
 });
 

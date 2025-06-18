@@ -1,140 +1,152 @@
 {% layout 'layouts/default.liquid', title: item.metadata.titel | default: "Online catalogus" %}
 {% block head %}
-<link rel="stylesheet" href="/styles/pages/details.css">
+  <link rel="stylesheet" href="/styles/pages/details.css">
 {% endblock %}
 {% block content %}
-<header>
-  <nav class="sm">
-    <a href="/catalogus/{{ navigation.prev_item }}">
-      {%- render 'partials/icons/triangle' %} Vorige <br>
-      boek
-    </a>
-    <a href="/catalogus" class="back">
-      {% render 'partials/icons/triangle' %} Terug naar<br>
-      publicatie overzicht
-    </a>
-    <a href="/catalogus/{{ navigation.next_item }}">
-      Volgende <br>
-      boek {% render 'partials/icons/triangle' -%}
-    </a>
-  </nav>
-</header>
-<div class="container">
-  <main>
-    <div id="comment">
-      <h2 class="md">Reacties</h2>
-      <ul>
-        {% for reactie in reacties %}
-          <li>
-            <h3 class="default">{{ reactie.from }}</h3>
-            <p class="sub">{{ reactie.text }}</p>
-          </li>
-        {% else %}
-          <li><p>Geen reacties gevonden</p></li>
-        {% endfor %}
-      </ul>
-      <form action="/catalogus/{{ item.id }}/messages" method="post">
-        <input type="hidden" name="detailId" value="{{ item.id }}">
-        <input type="hidden" name="page" value="{{ navigation.current_page }}">
-        <label>
-          <span>Reactie</span>
-          <input type="text" name="message" placeholder="Reactie...">
-        </label>
-        <button type="submit">Verstuur</button>
-      </form>
-    </div>
-    <div id="media">
-      <h2 class="md">Media</h2>
-    </div>
-    <div id="info">
-      <h1 class="md">{{ item.metadata.titel | default: 'n.v.t.' }}</h1>
-      <ul class="wrapper">
-        <li>
-          <h2 class="xs">{{ item.metadata.auteur_label | capitalize }}</h2>
-          <p class="sub">{{ item.metadata.auteur | default: 'n.p.' }}</p>
-        </li>
-        <li>
-          <h2 class="xs">{{ item.metadata.jaar_label | capitalize }}</h2>
-          <p class="sub">{{ item.metadata.jaar | default: 'n.p.' }}</p>
-        </li>
-        <li>
-          <h2 class="xs">{{ item.metadata.plaats_van_uitgave_label | capitalize }}</h2>
-          <p class="sub">{{ item.metadata.plaats_van_uitgave | default: 'n.p.' }}</p>
-        </li>
-        <li>
-          <h2 class="xs">Trefwoorden</h2>
-          <p class="sub">{{ item.metadata.keywords | default: 'n.p.' }}</p>
-        </li>
-        <li>
-          <h2 class="xs">{{ item.metadata.signatuur_label | capitalize }}</h2>
-          <p class="sub">{{ item.metadata.signatuur | default: 'n.p.' }}</p>
-        </li>
-        <li>
-          <h2 class="xs">Status</h2>
-          <p class="sub">{{ item.metadata.status | default: 'n.p.' }}</p>
-        </li>
-        <li>
-          <h2 class="xs">Aantal exemplaren</h2>
-          <p class="sub">{{ item.metadata.aantal_exemplaren | default: 'n.p.' }}</p>
-        </li>
-      </ul>
-      <div class="extra">
-        <h2 class="xs">
-          UBN <span class="sub">{{ item.metadata.uniek_boek_nummer_label | capitalize }}</span>
-        </h2>
-        <p class="sub">{{ item.metadata.uniek_boek_nummer | default: 'n.v.t.' }}</p>
-      </div>
-    </div>
-    <nav>
-      <ul class="tabs">
-        <li><a href="#info">Info</a></li>
-        <li>
-          <a href="#comment">{{ reacties.size | default: 0 }} Reacties</a>
-        </li>
-        <li><a href="#media">Media</a></li>
-      </ul>
+  <header>
+    <nav class="sm">
+      <a href="/catalogus/{{ navigation.prev_item }}">
+        {%- render 'partials/icons/triangle' %} Vorige <br>
+        boek
+      </a>
+      <a href="/catalogus" class="back">
+        {% render 'partials/icons/triangle' %} Terug naar<br>
+        publicatie overzicht
+      </a>
+      <a href="/catalogus/{{ navigation.next_item }}">
+        Volgende <br>
+        boek {% render 'partials/icons/triangle' -%}
+      </a>
     </nav>
-  </main>
-  <aside class="book">
-    {% if item.assets and item.assets.size > 0 %}
-      {% assign image_asset = item.assets[navigation.current_page] %}
-      <picture>
-        <source
-          srcset="{{ image_asset.medium.url }}"
-          type="image/jpeg"
-          media="(max-width: 880px)"
-          width="{{ image_asset.medium.width }}"
-          height="{{ image_asset.medium.height }}"
-        >
-        <source
-          srcset="{{ image_asset.fluid.url }}"
-          type="image/jpeg"
-          media="(max-width: 1140px)"
-          width="{{ image_asset.fluid.width }}"
-          height="{{ image_asset.fluid.height }}"
-        >
-        <source
-          srcset="{{ image_asset.large.url }}"
-          type="image/jpeg"
-          width="{{ image_asset.large.width }}"
-          height="{{ image_asset.large.height }}"
-        >
-        <img
-          src="{{ image_asset.medium.url }}"
-          alt="{{ item.metadata.titel | default: 'n.v.t.' }}"
-          width="{{ image_asset.medium.width }}"
-          height="{{ image_asset.medium.height }}"
-        >
-      </picture>
-      {% if navigation.prev_page != null and navigation.next_page != null %}
-        <nav class="img-nav">
-          <a href="/catalogus/{{ navigation.id }}?page={{ navigation.prev_page }}">Vorige</a>
-          <a href="/catalogus/{{ navigation.id }}?page={{ navigation.next_page }}">Volgende</a>
-        </nav>
+  </header>
+  <div class="container">
+    <main>
+      <div id="comment">
+        <h2 class="md">Reacties</h2>
+        <ul>
+          {% for reactie in reacties %}
+            <li>
+              <h3 class="default">{{ reactie.from }}</h3>
+              <p class="sub">{{ reactie.text }}</p>
+            </li>
+          {% else %}
+            <li>
+              <p>Geen reacties gevonden</p>
+            </li>
+          {% endfor %}
+        </ul>
+        <form action="/catalogus/{{ item.id }}/messages" method="post">
+          <input
+            type="hidden"
+            name="detailId"
+            value="{{ item.id }}">
+          <input
+            type="hidden"
+            name="page"
+            value="{{ navigation.current_page }}">
+          <label>
+            <span>Reactie</span>
+            <input
+              type="text"
+              name="message"
+              placeholder="Reactie...">
+          </label>
+          <button type="submit">Verstuur</button>
+        </form>
+      </div>
+      <div id="media">
+        <h2 class="md">Media</h2>
+      </div>
+      <div id="info">
+        <h1 class="md">{{ item.metadata.titel | default: 'n.v.t.' }}</h1>
+        <ul class="wrapper">
+          <li>
+            <h2 class="xs">{{ item.metadata.auteur_label | capitalize }}</h2>
+            <p class="sub">{{ item.metadata.auteur | default: 'n.p.' }}</p>
+          </li>
+          <li>
+            <h2 class="xs">{{ item.metadata.jaar_label | capitalize }}</h2>
+            <p class="sub">{{ item.metadata.jaar | default: 'n.p.' }}</p>
+          </li>
+          <li>
+            <h2 class="xs">{{ item.metadata.plaats_van_uitgave_label | capitalize }}</h2>
+            <p class="sub">{{ item.metadata.plaats_van_uitgave | default: 'n.p.' }}</p>
+          </li>
+          <li>
+            <h2 class="xs">Trefwoorden</h2>
+            <p class="sub">{{ item.metadata.keywords | default: 'n.p.' }}</p>
+          </li>
+          <li>
+            <h2 class="xs">{{ item.metadata.signatuur_label | capitalize }}</h2>
+            <p class="sub">{{ item.metadata.signatuur | default: 'n.p.' }}</p>
+          </li>
+          <li>
+            <h2 class="xs">Status</h2>
+            <p class="sub">{{ item.metadata.status | default: 'n.p.' }}</p>
+          </li>
+          <li>
+            <h2 class="xs">Aantal exemplaren</h2>
+            <p class="sub">{{ item.metadata.aantal_exemplaren | default: 'n.p.' }}</p>
+          </li>
+        </ul>
+        <div class="extra">
+          <h2 class="xs">
+            UBN
+            <span class="sub">{{ item.metadata.uniek_boek_nummer_label | capitalize }}</span>
+          </h2>
+          <p class="sub">{{ item.metadata.uniek_boek_nummer | default: 'n.v.t.' }}</p>
+        </div>
+      </div>
+      <nav>
+        <ul class="tabs">
+          <li>
+            <a href="#info">Info</a>
+          </li>
+          <li>
+            <a href="#comment">{{ reacties.size | default: 0 }} Reacties</a>
+          </li>
+          <li>
+            <a href="#media">Media</a>
+          </li>
+        </ul>
+      </nav>
+    </main>
+    <aside class="book">
+      {% if item.assets and item.assets.size > 0 %}
+        {% assign image_asset = item.assets[navigation.current_page] %}
+        <picture>
+          <source
+            srcset="{{ image_asset.medium.url }}"
+            type="image/jpeg"
+            media="(max-width: 880px)"
+            width="{{ image_asset.medium.width }}"
+            height="{{ image_asset.medium.height }}">
+          <source
+            srcset="{{ image_asset.fluid.url }}"
+            type="image/jpeg"
+            media="(max-width: 1140px)"
+            width="{{ image_asset.fluid.width }}"
+            height="{{ image_asset.fluid.height }}">
+          <source
+            srcset="{{ image_asset.large.url }}"
+            type="image/jpeg"
+            width="{{ image_asset.large.width }}"
+            height="{{ image_asset.large.height }}">
+          <img
+            src="{{ image_asset.medium.url }}"
+            alt="{{ item.metadata.titel | default: 'n.v.t.' }}"
+            width="{{ image_asset.medium.width }}"
+            height="{{ image_asset.medium.height }}">
+        </picture>
+        {% if navigation.prev_page != null and navigation.next_page != null %}
+          <nav class="img-nav">
+            <a href="/catalogus/{{ navigation.id }}?page={{ navigation.prev_page }}">Vorige</a>
+            <a href="/catalogus/{{ navigation.id }}?page={{ navigation.next_page }}">Volgende</a>
+          </nav>
+        {% endif %}
+      {% else %}
+        <p>Geen afbeelding beschikbaar.</p>
       {% endif %}
-    {% else %}
-      <p>Geen afbeelding beschikbaar.</p>
-    {% endif %}
-  </aside>
-</div>
+    </aside>
+  </div>
 {% endblock %}

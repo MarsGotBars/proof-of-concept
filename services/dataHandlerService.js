@@ -36,7 +36,8 @@ class DataHandlerService {
     // Alleen zoeken als er een niet-lege zoekterm is
     if (filters.search && filters.search.trim() !== "") {
       const searchTerm = filters.search.toLowerCase();
-
+      console.log(searchTerm);
+      
       filtered = filtered.filter((item) => {
         const valuesToSearch = [
           item.title,

@@ -183,3 +183,7 @@ a:not([href=""]), button, input[type="checkbox"], label:has(input[type="checkbox
 *::-webkit-scrollbar-thumb {
   background-color: var(--gold);
 }
+
+*::-webkit-scrollbar-thumb:hover{
+  background-color: var(--highlight);
+}

@@ -66,7 +66,7 @@ form {
   box-shadow: 0 -1rem 0 0 var(--blue);
 }
 
-.filters-desktop {
+.filters {
   display: flex;
   gap: 1.5rem;
   z-index: 2;
@@ -78,7 +78,7 @@ form {
 }
 
 /* Form Elements */
-.filters-desktop summary,
+.filters summary,
 .search > * {
   padding: 0.25rem 0.75rem;
   border: 0.1875rem solid var(--white);
@@ -94,10 +94,6 @@ form {
 }
 
 /* Form Details/Dropdowns */
-form details {
-  position: relative;
-}
-
 form summary {
   display: flex;
   align-items: center;
@@ -105,24 +101,57 @@ form summary {
   z-index: 2;
 }
 
-form details[open] svg {
+form details > *:nth-child(2) {
+  position: absolute;
+  top: calc(100% + 0.1875rem);
+  left: 0;
+  background: var(--blue);
+  border-bottom: var(--border-sm);
+  min-width: 100%;
+  padding: 1.25rem 2rem;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+
+}
+
+.filters-content ul li{
+  border: var(--border-sm);
+  border-color: var(--white);
+  padding: .25rem .75rem;
+}
+
+.filters-content ul li:has(input:checked){
+  border-color: var(--gold);
+}
+
+.filters details summary{
+  border: none;
+}
+
+.filters-content{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+details[open] > summary > svg{
   transform: rotate(180deg);
 }
 
-form details > *:nth-child(2) {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 0;
-  background: var(--blue);
-  border: var(--border-sm);
-  border-color: var(--white);
-  min-width: 100%;
-  width: max-content;
-  padding: 0.5rem;
+label input[type="checkbox"]{
+  appearance: none;
 }
 
-input:checked + span {
+label:hover span{
+  text-decoration: underline;
+}
+
+label input[type="checkbox"]:checked + span {
   color: var(--gold);
+  text-decoration: underline;
 }
 
 /* MARK: ITEMS LIST/GRID
@@ -204,10 +233,6 @@ input:checked + span {
   margin-top: 1rem;
 }
 
-.filters-mobile {
-  display: none;
-}
-
 /* MARK: FOOTER
 */
 
@@ -235,6 +260,7 @@ footer {
     flex-wrap: wrap;
     gap: 1rem;
   }
+  
   form .search{
     width: 100%;
     order: 1;
@@ -243,19 +269,20 @@ footer {
   .search input{
     width: 100%;
   }
-  form .filters-desktop{
+
+  form .filters{
     order: 2;
   }
 
-  form .filters-mobile{
-    order: 3;
-    width: 100%;
-    border: var(--border-sm);
-    border-color: var(--white);
-    position: static;
+ 
+
+  .filters ul {
+    z-index: 5;
+    max-height: 30vh;
+    overflow-y: auto;
   }
 
-  .filters-mobile summary{
+  .filters-content summary{
     padding: 0.25rem 0.75rem;
     height: 100%;
     width: 100%;
@@ -267,26 +294,6 @@ footer {
     border-bottom: var(--border-sm);
     top: calc(100% + .1875rem);
     width: 100%;
-    padding: 0.5rem;
   }
-
-  .filters-mobile .filters-mobile-content ul {
-    z-index: 5;
-    max-height: 30vh;
-    overflow-y: auto;
-  }
-
-  .filters-mobile .filters-mobile-content details{
-    position: static;
-    
-  }
-}
-
-@media (max-width: 31.25rem) {
-  .filters-desktop{
-    display: none;
-  }
-  .filters-mobile{
-    display: flex;
-  }
+  
 }
