@@ -3,7 +3,6 @@ import express from "express";
 import { Liquid } from "liquidjs";
 import "dotenv/config";
 import routes from "./routes/route.js"; // Single import
-import CacheService from "./services/CacheService.js";
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
