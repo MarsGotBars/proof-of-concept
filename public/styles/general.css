@@ -169,7 +169,7 @@ a:not([href=""]), button, input[type="checkbox"], label:has(input[type="checkbox
 }
 
 button:is(:hover, :focus-visible), input[type="checkbox"]:is(:hover, :focus-visible), label:has(input[type="checkbox"]):is(:hover, :focus-visible), label:has(input[type="radio"]):is(:hover, :focus-visible), summary:is(:hover, :focus-visible) {
-  opacity: .85;
+  opacity: .75;
 }
 
 *:not(input[type=checkbox]):focus-visible, li:has(input[type=checkbox]:focus-visible){

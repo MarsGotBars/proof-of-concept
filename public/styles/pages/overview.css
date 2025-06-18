@@ -3,6 +3,7 @@ header {
   flex-wrap: wrap;
   max-height: 37.5rem;
   position: relative;
+  z-index: 1;
 }
 
 header > a:nth-child(1) {
@@ -201,7 +202,10 @@ label input[type="checkbox"]:checked + span {
 
 /* MARK: ITEMS LIST/GRID
 */
-
+main {
+  position: relative;
+  z-index: 2;
+}
 .items-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
