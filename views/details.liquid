@@ -21,6 +21,31 @@
 </header>
 <div class="container">
   <main>
+    <div id="comment">
+      <h2 class="md">Reacties</h2>
+      <ul>
+        {% for reactie in reacties %}
+          <li>
+            <h3 class="default">{{ reactie.from }}</h3>
+            <p class="sub">{{ reactie.text }}</p>
+          </li>
+        {% else %}
+          <li><p>Geen reacties gevonden</p></li>
+        {% endfor %}
+      </ul>
+      <form action="/catalogus/{{ item.id }}/messages" method="post">
+        <input type="hidden" name="detailId" value="{{ item.id }}">
+        <input type="hidden" name="page" value="{{ navigation.current_page }}">
+        <label>
+          <span>Reactie</span>
+          <input type="text" name="message" placeholder="Reactie...">
+        </label>
+        <button type="submit">Verstuur</button>
+      </form>
+    </div>
+    <div id="media">
+      <h2 class="md">Media</h2>
+    </div>
     <div id="info">
       <h1 class="md">{{ item.metadata.titel | default: 'n.v.t.' }}</h1>
       <ul class="wrapper">
@@ -60,18 +85,11 @@
         <p class="sub">{{ item.metadata.uniek_boek_nummer | default: 'n.v.t.' }}</p>
       </div>
     </div>
-    <div id="comment">
-      <h2 class="default">Reacties</h2>
-      <p class="sub">{{ amount | default: 0 }} reacties</p>
-    </div>
-    <div id="media">
-      <h2 class="default">Media</h2>
-    </div>
     <nav>
       <ul class="tabs">
         <li><a href="#info">Info</a></li>
         <li>
-          <a href="#comment">{{ amount | default: 0 }} Reacties</a>
+          <a href="#comment">{{ reacties.size | default: 0 }} Reacties</a>
         </li>
         <li><a href="#media">Media</a></li>
       </ul>
