@@ -125,10 +125,10 @@ class DetailService {
    * 
    * @async
    * @param {number} currentPage - The current page/asset index
-   * @param {number} lookahead - How many additional assets to process ahead (default: 5)
+   * @param {number} lookahead - How many additional assets to process ahead (default: 3)
    * @returns {Promise<Object>} The data with processed assets
    */
-  async getDataWithProcessedAssets(currentPage = 0, lookahead = 5) {
+  async getDataWithProcessedAssets(currentPage = 0, lookahead = 3) {
     try {
       const rawData = await this.getRawData();
       
