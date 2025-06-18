@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { createDetailService } from "../services/detailService.js";
+import MessageService from "../services/messageService.js";
 
 const router = Router();
 
@@ -25,6 +26,12 @@ router.get("/catalogus/:id", async function (request, response) {
     const detailService = createDetailService(id);
     const item = await detailService.getDataWithProcessedAssets(page, 2);
     
+    // Ophalen van reacties voor deze detail pagina
+    const messageService = new MessageService();
+    const messagesResponse = await messageService.getMessages(id);
+    // Als er geen reacties zijn, stuur een lege array terug
+    const reacties = messagesResponse ?? [];
+    
     // Image pagination
     const assets = item.assets || [];
     const total_pages = assets.length;
@@ -39,7 +46,8 @@ router.get("/catalogus/:id", async function (request, response) {
     
     // Haal alle items op uit cache (efficiënt omdat het gecached is) - alleen voor navigatie
     const overviewService = (await import('../services/overviewService.js')).default;
-    const allItems = await overviewService.getRawData();
+    // Alleen de id's ophalen, zonder afbeeldingen
+    const allItems = await overviewService.getRawData({ processImages: false });
     
     // Vind de huidige index op basis van ID
     const currentIndex = allItems.findIndex(i => i.id === id);
@@ -54,6 +62,7 @@ router.get("/catalogus/:id", async function (request, response) {
     
     response.render("details", { 
       item,
+      reacties,
       current_page,
       navigation: {
         prev_item: previousItem ? previousItem.id : null,
