@@ -10,6 +10,12 @@
 {% endblock %}
 {% block content %}
   <header>
+    <a href="/"><img
+        src="/assets/images/bassie.png"
+        alt="Logo van The Embassy of the free mind"
+        width="502"
+        height="214"></a>
+
     <img
       src="/assets/images/overview.jpg"
       alt=""
@@ -75,7 +81,7 @@
         <div class="filters-content">
           <details name="filters">
             <summary>Auteur {% render 'partials/icons/triangle' %}</summary>
-            <div>
+            <div class="wrapper">
               <ul>
                 {% assign auteur_array = aggregations.auteur | entries %}
                 {% for entry in auteur_array %}
@@ -95,51 +101,58 @@
                   </li>
                 {% endfor %}
               </ul>
+              <button>Zoeken</button>
             </div>
           </details>
           <details name="filters">
             <summary>Jaar {% render 'partials/icons/triangle' %}</summary>
-            <ul>
-              {% for entry in aggregations.jaar %}
-                {% assign year_value = entry[0] %}
-                <li>
-                  <label for="jaar-{{ year_value | escape }}">
-                    <input
-                      type="checkbox"
-                      name="jaar"
-                      value="{{ year_value | escape }}"
-                      id="jaar-{{ year_value | escape }}"
-                      {% if filters.jaar contains year_value %}
-                      checked
-                      {% endif %}>
-                    <span>{{ year_value }}</span>
-                    ({{ entry[1] }})
-                  </label>
-                </li>
-              {% endfor %}
-            </ul>
+            <div class="wrapper">
+              <ul>
+                {% for entry in aggregations.jaar %}
+                  {% assign year_value = entry[0] %}
+                  <li>
+                    <label for="jaar-{{ year_value | escape }}">
+                      <input
+                        type="checkbox"
+                        name="jaar"
+                        value="{{ year_value | escape }}"
+                        id="jaar-{{ year_value | escape }}"
+                        {% if filters.jaar contains year_value %}
+                        checked
+                        {% endif %}>
+                      <span>{{ year_value }}</span>
+                      ({{ entry[1] }})
+                    </label>
+                  </li>
+                {% endfor %}
+              </ul>
+              <button>Zoeken</button>
+            </div>
           </details>
           <details name="filters">
             <summary>Plaats van publicatie {% render 'partials/icons/triangle' %}</summary>
-            <ul>
-              {% assign plaats_array = aggregations.plaats_van_uitgave | entries %}
-              {% for entry in plaats_array %}
-                <li>
-                  <label for="plaats-{{ entry[0] }}">
-                    <input
-                      type="checkbox"
-                      name="plaats_van_uitgave"
-                      value="{{ entry[0] }}"
-                      id="plaats-{{ entry[0] }}"
-                      {% if filters.plaats_van_uitgave contains entry[0] %}
-                      checked
-                      {% endif %}>
-                    <span>{{ entry[0] }}</span>
-                    ({{ entry[1] }})
-                  </label>
-                </li>
-              {% endfor %}
-            </ul>
+            <div class="wrapper">
+              <ul>
+                {% assign plaats_array = aggregations.plaats_van_uitgave | entries %}
+                {% for entry in plaats_array %}
+                  <li>
+                    <label for="plaats-{{ entry[0] }}">
+                      <input
+                        type="checkbox"
+                        name="plaats_van_uitgave"
+                        value="{{ entry[0] }}"
+                        id="plaats-{{ entry[0] }}"
+                        {% if filters.plaats_van_uitgave contains entry[0] %}
+                        checked
+                        {% endif %}>
+                      <span>{{ entry[0] }}</span>
+                      ({{ entry[1] }})
+                    </label>
+                  </li>
+                {% endfor %}
+              </ul>
+              <button>Zoeken</button>
+            </div>
           </details>
         </div>
       </details>
