@@ -25,7 +25,7 @@ class MessageService {
     }
   }
 
-  async getMessages(detailId, limit = 15) {
+  async getMessages(detailId, limit = -1) {
     try {
       // Haal de nieuwste berichten op (gesorteerd op id aflopend) en beperk tot 'limit'
       const url = `${this.baseUrl}items/messages?filter[from][_eq]=Marcin-IO&filter[for][_eq]=${detailId}&sort=-id&limit=${limit}`;

@@ -1,0 +1,27 @@
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 3rem;
+    aspect-ratio: 1;
+    background-color: var(--white);
+    border-radius: 50%;
+    animation: enlarge .5s ease-in-out infinite alternate;
+    animation-play-state: paused;
+    scale: 0;
+    opacity: 0;
+    transition: .3s scale, .3s opacity;
+}
+
+form#message-form[data-state="loading"] .loader {
+    animation-play-state: running;
+    scale: 1;
+    opacity: 1;
+}
+
+@keyframes enlarge {
+    to {
+        scale: 1.5;
+    }
+}

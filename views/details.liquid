@@ -1,6 +1,8 @@
 {% layout 'layouts/default.liquid', title: item.metadata.titel | default: "Online catalogus" %}
 {% block head %}
   <link rel="stylesheet" href="/styles/pages/details.css">
+  <link rel="stylesheet" href="/styles/components/loader.css">
+  <script type="module" src="/scripts/clientMessage.js"></script>
 {% endblock %}
 {% block content %}
   <header>
@@ -25,17 +27,18 @@
         <h2 class="md">Reacties</h2>
         <ul>
           {% for reactie in reacties %}
-            <li>
+            <li class="card" data-message-id="{{ reactie.id }}" style="--vt-name:msg-{{ reactie.id }};">
               <h3 class="default">{{ reactie.from }}</h3>
               <p class="sub">{{ reactie.text }}</p>
             </li>
           {% else %}
-            <li>
+            <li class="empty">
               <p>Geen reacties gevonden</p>
             </li>
           {% endfor %}
         </ul>
-        <form action="/catalogus/{{ item.id }}/messages" method="post">
+        <form id="message-form" action="/catalogus/{{ item.id }}/messages" method="post" data-state="default">
+        {% render 'partials/icons/loader' %}
           <input
             type="hidden"
             name="detailId"
@@ -45,12 +48,12 @@
             name="page"
             value="{{ navigation.current_page }}">
           <label>
-            <span>Reactie</span>
-            <input
-              type="text"
+            <span class="xs">Plaats een reactie</span>
+            <textarea
               name="message"
-              placeholder="Reactie...">
+              placeholder="Reactie..."></textarea>
           </label>
+          <p class="handling"><span class="error">Error</span></p>
           <button type="submit">Verstuur</button>
         </form>
       </div>

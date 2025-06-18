@@ -162,14 +162,15 @@ picture {
   display: block;
 }
 
-/* Only show pointer cursor on links with href */
 a:not([href=""]), button, input[type="checkbox"], label:has(input[type="checkbox"]), label:has(input[type="radio"]), details, summary {
   cursor: pointer;
   transition: .3s opacity ease-out;
 }
 
+@media (hover: hover) {
 button:is(:hover, :focus-visible), input[type="checkbox"]:is(:hover, :focus-visible), label:has(input[type="checkbox"]):is(:hover, :focus-visible), label:has(input[type="radio"]):is(:hover, :focus-visible), summary:is(:hover, :focus-visible) {
-  opacity: .75;
+    opacity: .75;
+  }
 }
 
 *:not(input[type=checkbox]):focus-visible, li:has(input[type=checkbox]:focus-visible){
