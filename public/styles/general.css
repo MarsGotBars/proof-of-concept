@@ -145,6 +145,7 @@ span {
   width: fit-content;
   display: flex;
   align-items: center;
+  justify-content: center;
   aspect-ratio: 1;
 }
 
@@ -162,8 +163,17 @@ picture {
 }
 
 /* Only show pointer cursor on links with href */
-a:not([href=""]), button, input[type="checkbox"], label:has(input[type="checkbox"]), label:has(input[type="radio"]), details {
+a:not([href=""]), button, input[type="checkbox"], label:has(input[type="checkbox"]), label:has(input[type="radio"]), details, summary {
   cursor: pointer;
+  transition: .3s opacity ease-out;
+}
+
+button:is(:hover, :focus-visible), input[type="checkbox"]:is(:hover, :focus-visible), label:has(input[type="checkbox"]):is(:hover, :focus-visible), label:has(input[type="radio"]):is(:hover, :focus-visible), summary:is(:hover, :focus-visible) {
+  opacity: .85;
+}
+
+*:not(input[type=checkbox]):focus-visible, li:has(input[type=checkbox]:focus-visible){
+  outline: hotpink 5px dashed;
 }
 
 /* MARK: MEDIA QUERIES
