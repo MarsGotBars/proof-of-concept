@@ -134,7 +134,7 @@ aside nav {
 }
 
 aside nav a {
-  padding: .25rem .75rem;
+  padding: 0.25rem 0.75rem;
   background: var(--black);
 }
 
@@ -179,7 +179,7 @@ main .tabs {
 #comment form {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: 0.5rem;
   margin-top: auto;
   view-transition-name: comment-form;
   position: relative;
@@ -195,7 +195,6 @@ form#message-form p.handling {
   /* Reserve space equal to one line of text */
   min-height: 1.5rem;
   color: crimson;
-
 }
 
 form#message-form:not([data-state="error"]) p.handling span.error {
@@ -228,7 +227,7 @@ form#message-form:not([data-state="error"]) p.handling span.error {
 }
 
 form#message-form button[type="submit"] {
-  padding: 0.25rem .75rem;
+  padding: 0.25rem 0.75rem;
   background: var(--white);
   color: var(--blue);
   width: fit-content;
@@ -236,7 +235,7 @@ form#message-form button[type="submit"] {
 
 form#message-form textarea {
   border: var(--border-sm);
-  padding: 0.25rem .75rem;
+  padding: 0.25rem 0.75rem;
   height: 5rem;
   resize: none;
 }
@@ -279,7 +278,7 @@ form#message-form textarea {
     order: 1;
   }
 
-  aside nav{
+  aside nav {
     top: 50%;
     transform: translateY(-50%);
     justify-content: space-between;
@@ -291,31 +290,32 @@ form#message-form textarea {
   }
 }
 
-@view-transition{
-  navigation:auto;
-}
+@supports (view-transition-name: auto) {
+  @view-transition {
+    navigation: auto;
+  }
 
-#comment {
-  padding-bottom: 0;
-}
+  #comment {
+    padding-bottom: 0;
+  }
 
-#comment li[data-message-id] {
-  view-transition-name: var(--vt-name);
-  animation-duration: 0.5s;
-}
+  #comment li[data-message-id] {
+    view-transition-name: var(--vt-name);
+    animation-duration: 0.5s;
+  }
 
-#comment form {
-  view-transition-name: comment-form;
-  background-color: var(--blue);
-  padding-bottom: 1.5rem; 
-}
+  #comment form {
+    view-transition-name: comment-form;
+    background-color: var(--blue);
+    padding-bottom: 1.5rem;
+  }
 
-main nav {
-  view-transition-name: main-navigation;
-  background-color: var(--blue);
-}
+  main nav {
+    view-transition-name: main-navigation;
+    background-color: var(--blue);
+  }
 
-aside.book {
-  view-transition-name: book-image;
+  aside.book {
+    view-transition-name: book-image;
+  }
 }
-
