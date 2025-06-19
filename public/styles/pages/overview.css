@@ -356,3 +356,26 @@ footer {
     width: 100%;
   }
 }
+
+@supports (animation-timeline: view()) {
+  /* Skip de eerste 4 */
+  .items-list li:nth-child(n+5) {
+    animation-name: appear;
+    animation-timeline: view();
+    animation-range: entry 0% entry 50%;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+
+  @keyframes appear {
+    to {
+      scale: 1;
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
