@@ -28,6 +28,7 @@ header > a:nth-child(1) img {
 .wrapper ul {
   gap: 1rem;
   flex-wrap: wrap;
+  text-decoration: underline;
 }
 
 /* MARK: HEADER COMPONENTS
