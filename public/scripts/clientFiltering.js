@@ -1,20 +1,20 @@
-import { initInfiniteScroll } from '/scripts/infiniteScroll.js';
+import { initInfiniteScroll } from "/scripts/infiniteScroll.js";
 
 function formToQueryString(form) {
   return new URLSearchParams(new FormData(form)).toString();
 }
 
 async function fetchOverview(url) {
-  const res  = await fetch(url, { headers: { Accept: 'text/html' } });
+  const res = await fetch(url, { headers: { Accept: "text/html" } });
   if (!res.ok) throw new Error(res.statusText);
   const html = await res.text();
-  return new DOMParser().parseFromString(html, 'text/html');
+  return new DOMParser().parseFromString(html, "text/html");
 }
 
 function replaceMain(nextDoc) {
-  const currentMain = document.querySelector('main');
-  const newMain     = nextDoc.querySelector('main');
-  if (!currentMain || !newMain) throw new Error('main element not found');
+  const currentMain = document.querySelector("main");
+  const newMain = nextDoc.querySelector("main");
+  if (!currentMain || !newMain) throw new Error("main element not found");
   currentMain.replaceWith(newMain);
 }
 
@@ -27,9 +27,11 @@ async function applyFilters(form) {
     replaceMain(nextDoc);
     initInfiniteScroll();
     init();
-    history.pushState(null, '', url);
+    history.pushState(null, "", url);
 
-    document.querySelector('.items-list')?.scrollIntoView({ behavior: 'instant' });
+    document
+      .querySelector(".items-list")
+      ?.scrollIntoView({ behavior: "instant" });
   };
 
   if (document.startViewTransition) {
@@ -43,18 +45,18 @@ function init() {
   const form = document.querySelector('form[action="/catalogus"]');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
     applyFilters(form);
   });
 
-  form.addEventListener('change', (e) => {
+  form.addEventListener("change", (e) => {
     if (e.target.matches('input[type="checkbox"]')) {
       applyFilters(form);
     }
   });
 
-  window.addEventListener('popstate', async () => {
+  window.addEventListener("popstate", async () => {
     const nextDoc = await fetchOverview(location.pathname + location.search);
     replaceMain(nextDoc);
     initInfiniteScroll();
@@ -62,4 +64,4 @@ function init() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener("DOMContentLoaded", init);
