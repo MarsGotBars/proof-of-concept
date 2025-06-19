@@ -36,7 +36,7 @@ header nav > a svg {
 header nav > *:nth-child(1) {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-xs);
   flex: 20%;
 }
 
@@ -47,7 +47,7 @@ header nav > .back svg {
 header nav > *:nth-child(3) {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-xs);
   flex: 20%;
 }
 
@@ -64,7 +64,7 @@ header nav > .back {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-xs);
   padding: 1rem 0;
 }
 
@@ -128,9 +128,9 @@ aside nav {
   left: 0;
   width: 100%;
   display: flex;
-  gap: 1rem;
+  gap: var(--space-sm);
   justify-content: center;
-  padding: 1.5rem;
+  padding: var(--space-md);
 }
 
 aside nav a {
@@ -145,7 +145,7 @@ main nav {
 
 main .tabs {
   height: 100%;
-  padding: 2rem 2rem;
+  padding: var(--space-lg) var(--space-lg);
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -157,7 +157,7 @@ main .tabs {
 #media {
   height: 80%;
   display: none;
-  padding: 1.5rem 2rem;
+  padding: var(--space-md) var(--space-lg);
 }
 
 #comment {
@@ -179,7 +179,7 @@ main .tabs {
 #comment form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-xs);
   margin-top: auto;
   view-transition-name: comment-form;
   position: relative;
@@ -188,7 +188,7 @@ main .tabs {
 #comment form label {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-xs);
 }
 
 form#message-form p.handling {
@@ -205,7 +205,7 @@ form#message-form:not([data-state="error"]) p.handling span.error {
 #info {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-md);
 }
 
 #media:target ~ #info,
@@ -223,7 +223,7 @@ form#message-form:not([data-state="error"]) p.handling span.error {
   display: grid;
   overflow: auto;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem 1rem;
+  gap: var(--space-lg) var(--space-sm);
 }
 
 form#message-form button[type="submit"] {
@@ -259,7 +259,7 @@ form#message-form textarea {
 
   #info .wrapper {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: var(--space-sm);
   }
 }
 
@@ -307,7 +307,7 @@ form#message-form textarea {
   #comment form {
     view-transition-name: comment-form;
     background-color: var(--blue);
-    padding-bottom: 1.5rem;
+    padding-bottom: var(--space-md);
   }
 
   main nav {

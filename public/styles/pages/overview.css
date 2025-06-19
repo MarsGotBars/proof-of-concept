@@ -90,7 +90,7 @@ form {
 
 .filters {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--space-md);
   z-index: 2;
 }
 
@@ -105,7 +105,7 @@ form > .filters summary {
 .filters-content .wrapper {
   flex-direction: column;
   align-items: start;
-  gap: 2rem;
+  gap: var(--space-lg);
 }
 
 form .filters div ul {
@@ -144,7 +144,7 @@ form .filters div ul {
 form summary {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-xs);
   z-index: 2;
 }
 
@@ -159,7 +159,7 @@ form details > *:nth-child(2) {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1rem;
+  gap: var(--space-xs) var(--space-sm);
   justify-content: start;
 }
 
@@ -185,7 +185,7 @@ form details > *:nth-child(2) {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: var(--space-xs);
 }
 
 details[open] > summary > svg {
@@ -214,8 +214,8 @@ main {
 .items-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
+  gap: var(--space-md);
+  padding: var(--space-lg);
 }
 
 .items-list > li {
@@ -239,14 +239,14 @@ main {
 
 /* Item Titles */
 .items-list h2 {
-  padding: 0.5rem;
+  padding: var(--space-xs);
 }
 
 /* MARK: ITEM DETAILS/INFO
 */
 
 .items-list > li details {
-  padding: 0.5rem;
+  padding: var(--space-xs);
   margin-top: auto;
   position: relative;
 }
@@ -269,22 +269,22 @@ main {
 .items-list > li details div {
   position: absolute;
   top: calc(100% - 0.25rem);
-  width: calc(100% - 1rem);
+  width: calc(100% - var(--space-sm));
   background: var(--blue);
   border: var(--border-sm);
   border-color: var(--white);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0.5rem;
+  padding: var(--space-xs);
 }
 
 .items-list details div h3 + p {
-  margin-top: 0.5rem;
+  margin-top: var(--space-xs);
 }
 
 .items-list details div p + h3 {
-  margin-top: 1rem;
+  margin-top: var(--space-sm);
 }
 
 /* MARK: FOOTER
@@ -320,7 +320,7 @@ footer {
 
   form {
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: var(--space-sm);
   }
 
   form .search {
