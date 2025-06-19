@@ -1,7 +1,13 @@
-const pagination = document.querySelector(".pagination");
-const mainElement = document.querySelector("main");
+// Wrap the entire existing logic in a function so it can be re-run
+export function initInfiniteScroll() {
+  const pagination = document.querySelector(".pagination");
+  const mainElement = document.querySelector("main");
 
-if (mainElement) {
+  if (!mainElement) {
+    console.warn("Main element not found");
+    return;
+  }
+
   // Create sentinel element for infinite scroll detection
   const sentinel = document.createElement('div');
   sentinel.id = 'sentinel';
@@ -120,7 +126,7 @@ if (mainElement) {
     observer.observe(sentinel);
     pagination?.remove();
   }
-
-} else {
-  console.warn("Main element not found");
 }
+
+// Initialise on first load
+initInfiniteScroll();

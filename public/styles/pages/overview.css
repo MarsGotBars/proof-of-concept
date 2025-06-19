@@ -172,6 +172,10 @@ form details > *:nth-child(2) {
   border-color: var(--gold);
 }
 
+.filters-content {
+  cursor: default;
+}
+
 .filters details summary {
   border: none;
 }

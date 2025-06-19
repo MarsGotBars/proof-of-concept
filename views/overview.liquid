@@ -4,9 +4,11 @@
 %}
 {% block head %}
   <link rel="stylesheet" href="./styles/general.css">
-  <link rel="stylesheet" href="./styles/components/pagination.css">
+  <link rel="stylesheet" href="./styles/components/pagination.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="./styles/components/pagination.css"></noscript>
   <link rel="stylesheet" href="./styles/pages/overview.css">
   <script type="module" src="./scripts/infiniteScroll.js"></script>
+  <script type="module" src="./scripts/clientFiltering.js"></script>
 {% endblock %}
 {% block content %}
   <header>
