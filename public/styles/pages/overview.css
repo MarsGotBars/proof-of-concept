@@ -249,6 +249,7 @@ main {
   padding: var(--space-xs);
   margin-top: auto;
   position: relative;
+  z-index: 1;
 }
 
 .items-list > li details > * {
